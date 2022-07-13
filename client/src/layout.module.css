@@ -1,0 +1,31 @@
+.link {
+    text-decoration: none;
+    color : black;
+}
+nav {
+    height: 125px;
+}
+nav.font {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+.navColor {
+    background-color: whitesmoke;
+}
+button {
+    width: 100%;
+    border: none;
+    background-color: whitesmoke;
+}
+.list {
+    position: relative;
+    background-color: whitesmoke;
+    
+}
+.fillItems {
+    position:  absolute;
+    left: 0;
+    width: 100%;
+    top: 125px;
+}
