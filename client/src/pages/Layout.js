@@ -8,18 +8,18 @@ function Layout() {
   return (
     <>
       <nav className={`${styles.font} ${styles.navColor}`}>
-        <ul className="d-flex list-unstyled">
-          <li className="p-5 flex-fill">
+        <ul className="d-flex list-unstyled align-items-center">
+          <li className="p-3 flex-fill">
             <Link className={styles.link} to="/">
               Home
             </Link>
           </li>
-          <li className="p-5 flex-fill">
+          <li className="p-3 flex-fill">
             <Link className={styles.link} to="/article">
               Add Article
             </Link>
           </li>
-          <li className={`p-5 flex-fill ${styles.list}`}>
+          <li className={`p-3 flex-fill ${styles.list}`}>
             <button
               className="d-flex justify-content-between"
               onClick={() => setToggle(!toggle)}
@@ -31,23 +31,23 @@ function Layout() {
             </button>
             {toggle && (
               <ul className= {`list-group ${styles.fillItems}`}>
-                <li class="list-group-item">First item</li>
-                <li class="list-group-item">Second item</li>
-                <li class="list-group-item">Third item</li>
+                <li className="list-group-item">First item</li>
+                <li className="list-group-item">Second item</li>
+                <li className="list-group-item">Third item</li>
               </ul>
             )}
           </li>
-          <li className="p-5 flex-fill">
+          <li className="p-3 flex-fill">
             <Link className={styles.link} to="/register">
               Register
             </Link>
           </li>
-          <li className="p-5 flex-fill">
+          <li className="p-3 flex-fill">
             <Link className={styles.link} to="/login">
               Login
             </Link>
           </li>
-          <li className="p-5 flex-fill">
+          <li className="p-3 flex-fill">
             <a className={styles.link}>Logout</a>
           </li>
         </ul>

@@ -1,9 +1,13 @@
+* {
+    box-sizing: border-box;
+}
 .link {
     text-decoration: none;
     color : black;
+    width: 100%;
 }
 nav {
-    height: 125px;
+    height: 59px;
 }
 nav.font {
     font-family: 'Work Sans', sans-serif;
@@ -21,11 +25,20 @@ button {
 .list {
     position: relative;
     background-color: whitesmoke;
+    height: 59px;
     
 }
 .fillItems {
     position:  absolute;
     left: 0;
     width: 100%;
-    top: 125px;
+    top: 59px;
+}
+.fillItems li {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+}
+nav ul li {
+    width: 240px;
 }
