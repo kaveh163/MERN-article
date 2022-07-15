@@ -7,50 +7,57 @@ function Layout() {
   const [toggle, setToggle] = useState(false);
   return (
     <>
-      <nav className={`${styles.font} ${styles.navColor}`}>
-        <ul className="d-flex list-unstyled align-items-center">
-          <li className="p-3 flex-fill">
-            <Link className={styles.link} to="/">
-              Home
-            </Link>
-          </li>
-          <li className="p-3 flex-fill">
-            <Link className={styles.link} to="/article">
-              Add Article
-            </Link>
-          </li>
-          <li className={`p-3 flex-fill ${styles.list}`}>
-            <button
-              className="d-flex justify-content-between"
-              onClick={() => setToggle(!toggle)}
-            >
-              <span>Articles</span>
-              <span>
-                <FontAwesomeIcon icon={faCaretDown} />
-              </span>
-            </button>
-            {toggle && (
-              <ul className= {`list-group ${styles.fillItems}`}>
-                <li className="list-group-item">First item</li>
-                <li className="list-group-item">Second item</li>
-                <li className="list-group-item">Third item</li>
-              </ul>
-            )}
-          </li>
-          <li className="p-3 flex-fill">
-            <Link className={styles.link} to="/register">
-              Register
-            </Link>
-          </li>
-          <li className="p-3 flex-fill">
-            <Link className={styles.link} to="/login">
-              Login
-            </Link>
-          </li>
-          <li className="p-3 flex-fill">
-            <a className={styles.link}>Logout</a>
-          </li>
-        </ul>
+      <nav
+        className={`navbar navbar-expand-lg navbar-light ${styles.navColor} ${styles.font}`}
+      >
+        <div className="container-fluid">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            className={`collapse navbar-collapse ${styles.menu}`}
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/">
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/article">
+                  Add Article
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/articles">
+                  Articles
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">
+                  Register
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
       <Outlet />
     </>

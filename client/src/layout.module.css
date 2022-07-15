@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    z-index: 0;
 }
 .link {
     text-decoration: none;
@@ -15,7 +16,12 @@ nav.font {
     font-size: 18px;
 }
 .navColor {
-    background-color: whitesmoke;
+    background-color: whitesmoke!important;
+}
+.menu {
+    z-index: 3;
+    background-color: whitesmoke!important;
+    opacity: 0.83;
 }
 button {
     width: 100%;
@@ -41,4 +47,11 @@ button {
 }
 nav ul li {
     width: 240px;
+}
+
+@media (max-width: 576px) {
+    .menu {
+      z-index: 3!important;
+    }
+   
 }

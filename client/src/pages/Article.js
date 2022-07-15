@@ -1,7 +1,10 @@
+import styles from "../article.module.css"
 const Article = () => {
   return (
     <>
-      <h1>Aricles</h1>
+     <section className="container-fluid">
+        <h1 className={` ${styles.mrg} `}>Article</h1>
+      </section>
     </>
   );
 };

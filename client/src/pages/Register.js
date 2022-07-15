@@ -1,8 +1,11 @@
+import styles from "../register.module.css"
 const Register = () => {
-    return (
-      <>
-        <h1>Register</h1>
-      </>
-    );
-  };
-  export default Register;
+  return (
+    <>
+      <section className="container-fluid">
+        <h1 className={` ${styles.mrg} `}>Register</h1>
+      </section>
+    </>
+  );
+};
+export default Register;

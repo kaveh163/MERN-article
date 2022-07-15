@@ -1,7 +1,11 @@
+import styles from "../login.module.css";
+
 const Login = () => {
   return (
     <>
-      <h1>Login</h1>
+      <section className="container-fluid">
+        <h1 className={` ${styles.mrg} `}>Login</h1>
+      </section>
     </>
   );
 };

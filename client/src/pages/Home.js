@@ -1,6 +1,11 @@
 const Home = () => {
-    return <>
+  return (
+    <>
+      <section className="container-fluid">
+        <h1>Home</h1>
+      </section>
     </>
-  };
-  
-  export default Home;
+  );
+};
+
+export default Home;
