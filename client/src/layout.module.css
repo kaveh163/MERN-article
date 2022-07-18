@@ -1,12 +1,12 @@
 * {
     box-sizing: border-box;
-    z-index: 0;
+    z-index: 100;
 }
-.link {
+/* .link {
     text-decoration: none;
     color : black;
     width: 100%;
-}
+} */
 nav {
     height: 59px;
 }
@@ -23,18 +23,18 @@ nav.font {
     background-color: whitesmoke!important;
     opacity: 0.83;
 }
-button {
+/* button {
     width: 100%;
     border: none;
     background-color: whitesmoke;
-}
-.list {
+} */
+/* .list {
     position: relative;
     background-color: whitesmoke;
     height: 59px;
     
-}
-.fillItems {
+} */
+/* .fillItems {
     position:  absolute;
     left: 0;
     width: 100%;
@@ -44,14 +44,14 @@ button {
     font-family: 'Work Sans', sans-serif;
     font-weight: 300;
     font-size: 16px;
-}
+} */
 nav ul li {
     width: 240px;
-}
+} 
 
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
     .menu {
       z-index: 3!important;
     }
    
-}
+} */

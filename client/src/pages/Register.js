@@ -3,7 +3,11 @@ const Register = () => {
   return (
     <>
       <section className="container-fluid">
-        <h1 className={` ${styles.mrg} `}>Register</h1>
+        <section className={`styles.wrapper`}>
+          <section className={`styles.innerWrapper`}>
+            
+          </section>
+        </section>
       </section>
     </>
   );
