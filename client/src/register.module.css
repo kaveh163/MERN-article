@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+.wrapper {
+    height: auto;
+    padding: 88px 25px 88px 25px;
+    background-color: #79589f;
+    /* margin-right: auto!important;
+    margin-left: auto!important; */
+}
+
+.innerWrapper {
+    
+    /* height: 580px; */
+    width: 375px;
+    
+}
+.register {
+   padding: 25px;
+   width: inherit;
+   height: inherit;
+   background-color: white;
+   border-radius: 16px;
+}
+.rbtn {
+    border-radius: 16px;
+}
+
+input {
+    background-image: none!important;
+    border-color:#ced4da!important;
+}
+@media (max-width: 576px) {
+    .wrapper {
+        margin-left: auto;
+        margin-right: auto;
+        /* z-index: -1; */
+        /* width: 388px; */
+        padding-left: 0;
+        padding-right: 0;
+        background-color: #79589f;;
+    }
+    
+}
