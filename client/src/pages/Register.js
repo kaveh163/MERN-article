@@ -1,12 +1,21 @@
 import styles from "../register.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faEyeSlash,
+  faHandsAslInterpreting,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffec, useRef } from "react";
 
 const Register = () => {
   const [eye, setEye] = useState(false);
+  const [error, setError] = useState(null);
 
   const passwordElement = useRef();
+  const fnameElement = useRef();
+  const lnameElement = useRef();
+  const cpasswordElement = useRef();
+  const emailElement = useRef();
   const handleEye = () => {
     setEye(!eye);
     if (eye) {
@@ -15,16 +24,48 @@ const Register = () => {
       passwordElement.current.type = "text";
     }
   };
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const obj = {};
+    obj["fname"] = fnameElement.current.value;
+    obj["lname"] = lnameElement.current.value;
+    obj["pass"] = passwordElement.current.value;
+    obj["cpass"] = cpasswordElement.current.value;
+    obj["email"] = emailElement.current.value;
+    console.log("obj", obj);
+
+    const createRegister = async () => {
+      try {
+        const response = await fetch("/users/register", {
+          method: "POST",
+          body: JSON.stringify(obj),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+        const data = await response.json();
+        console.log("data", data);
+        if(data.url === 'home') {
+          window.location.href= '/';
+        } else {
+          console.log(data.errors);
+          setError(data.errors);
+        }
+        
+      } catch (error) {
+        console.log("Error posting data");
+        process.exit(1);
+      }
+    };
+    createRegister();
+  };
   return (
     <>
       <section className="container-fluid">
         <section className={`${styles.wrapper}`}>
           <section className="">
-            <section className={`${styles.innerWrapper} mx-auto`}>
-              <form
-                action="/action_page.php"
-                className={`was-validated ${styles.register}`}
-              >
+            <section className={`was-validated ${styles.innerWrapper} mx-auto`}>
+              <form action="/action_page.php" className={` ${styles.register}`}>
                 <label htmlFor="fname" className="form-label">
                   firstname:
                 </label>
@@ -33,13 +74,22 @@ const Register = () => {
                     type="text"
                     className="form-control"
                     id="fname"
-                    placeholder="Enter username"
+                    placeholder="Enter firstname"
                     name="fname"
+                    ref={fnameElement}
                     required
                   />
-                  <div className="valid-feedback">Valid.</div>
+
                   <div className="invalid-feedback">
-                    Please fill out this field.
+                    {error
+                      ? error.map((item, index) => {
+                          if (item.param === "fname") {
+                            return item.msg;
+                          } else {
+                            return "";
+                          }
+                        })
+                      : ""}
                   </div>
                 </div>
                 <label htmlFor="lname" className="form-label">
@@ -50,20 +100,29 @@ const Register = () => {
                     type="text"
                     className="form-control"
                     id="lname"
-                    placeholder="Enter username"
+                    placeholder="Enter lastname"
                     name="lname"
+                    ref={lnameElement}
                     required
                   />
-                  <div className="valid-feedback">Valid.</div>
+
                   <div className="invalid-feedback">
-                    Please fill out this field.
+                    {error
+                      ? error.map((item, index) => {
+                          if (item.param === "lname") {
+                            return item.msg;
+                          } else {
+                            return "";
+                          }
+                        })
+                      : ""}
                   </div>
                 </div>
                 <label htmlFor="pwd" className="form-label">
                   Password:
                 </label>
-                <div className="mb-2 mt-2 input-group">
-                  <span class="input-group-text">
+                <div className="mb-2 mt-2 input-group has-validation">
+                  <span className="input-group-text">
                     <FontAwesomeIcon
                       icon={eye ? faEye : faEyeSlash}
                       onClick={handleEye}
@@ -78,9 +137,17 @@ const Register = () => {
                     ref={passwordElement}
                     required
                   />
-                  <div className="valid-feedback">Valid.</div>
+
                   <div className="invalid-feedback">
-                    Please fill out this field.
+                    {error
+                      ? error.map((item, index) => {
+                          if (item.param === "pass") {
+                            return item.msg;
+                          } else {
+                            return "";
+                          }
+                        })
+                      : ""}
                   </div>
                 </div>
                 <label htmlFor="cpwd" className="form-label">
@@ -91,13 +158,22 @@ const Register = () => {
                     type="password"
                     className="form-control"
                     id="cpwd"
-                    placeholder="Enter password"
+                    placeholder="confirm password"
                     name="cpwd"
+                    ref={cpasswordElement}
                     required
                   />
-                  <div className="valid-feedback">Valid.</div>
+
                   <div className="invalid-feedback">
-                    Please fill out this field.
+                    {error
+                      ? error.map((item, index) => {
+                          if (item.param === "cpass") {
+                            return item.msg;
+                          } else {
+                            return "";
+                          }
+                        })
+                      : ""}
                   </div>
                 </div>
                 <label htmlFor="email" className="form-label">
@@ -108,19 +184,27 @@ const Register = () => {
                     type="email"
                     className="form-control"
                     id="email"
-                    placeholder="Enter password"
+                    placeholder="Enter email"
                     name="email"
+                    ref={emailElement}
                     required
                   />
-                  <div className="valid-feedback">Valid.</div>
+                  
                   <div className="invalid-feedback">
-                    Please fill out this field.
+                  {error? error.map((item, index) => {
+                      if(item.param === 'email') {
+                        return item.msg;
+                      } else {
+                        return "";
+                      }
+                    }): ''}
                   </div>
                 </div>
-                <div class="d-grid">
+                <div className="d-grid">
                   <button
                     type="submit"
                     className={`btn btn-primary btn-block mb-2 mt-2 ${styles.rbtn}`}
+                    onClick={(e) => handleRegister(e)}
                   >
                     Create Account
                   </button>

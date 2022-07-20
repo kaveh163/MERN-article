@@ -5,9 +5,14 @@ const articles = require('./routes/articles');
 const users = require('./routes/users'); 
 const app = express();
 
-// Routes middleware
+//Parsing middlewares
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+// Routes middlewares
 app.use('/articles', articles);
 app.use('/users', users);
+
 
 connectDB();
 
