@@ -46,7 +46,7 @@ const Register = () => {
         const data = await response.json();
         console.log("data", data);
         if(data.url === 'home') {
-          window.location.href= '/';
+          window.location.href= '/?display_flash=true';
         } else {
           console.log(data.errors);
           setError(data.errors);
@@ -84,6 +84,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "fname") {
+                            fnameElement.current.value = '';
                             return item.msg;
                           } else {
                             return "";
@@ -110,6 +111,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "lname") {
+                            lnameElement.current.value = '';
                             return item.msg;
                           } else {
                             return "";
@@ -142,6 +144,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "pass") {
+                            passwordElement.current.value = '';
                             return item.msg;
                           } else {
                             return "";
@@ -168,6 +171,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "cpass") {
+                            cpasswordElement.current.value = '';
                             return item.msg;
                           } else {
                             return "";
@@ -193,6 +197,7 @@ const Register = () => {
                   <div className="invalid-feedback">
                   {error? error.map((item, index) => {
                       if(item.param === 'email') {
+                        emailElement.current.value = '';
                         return item.msg;
                       } else {
                         return "";

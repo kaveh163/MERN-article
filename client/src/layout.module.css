@@ -17,12 +17,16 @@ nav.font {
 }
 .navColor {
     background-color: whitesmoke!important;
+    text-align: center!important;
 }
 .menu {
     z-index: 3;
     background-color: whitesmoke!important;
     opacity: 0.83;
+    
+
 }
+
 /* button {
     width: 100%;
     border: none;
@@ -49,9 +53,9 @@ nav ul li {
     width: 240px;
 } 
 
-/* @media (max-width: 576px) {
-    .menu {
-      z-index: 3!important;
+@media (max-width: 576px) {
+    ul li {
+      width: 100%!important;
     }
    
-} */
+}

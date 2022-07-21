@@ -7,6 +7,7 @@ const User = require('../models/User');
 router.get('/', function (req, res) {
     res.send('users routes working')
 });
+
 router.post(
     "/register",
     [
@@ -53,7 +54,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.json({ errors: errors.array() });
       }
-      return res.json({ url: "home" });
+      return res.json({ url: "home"});
     }
   );
 module.exports = router;
