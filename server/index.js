@@ -1,14 +1,17 @@
 const express = require("express");
 const PORT = process.env.PORT || 3001;
+const passport = require('passport');
 const connectDB = require("./config/db");
 const articles = require("./routes/articles");
 const users = require("./routes/users");
 const app = express();
 
-//Parsing middlewares
+// Parsing middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Passport middleware
+app.use(passport.initialize());
 // Routes middlewares
 app.use("/articles", articles);
 app.use("/users", users);

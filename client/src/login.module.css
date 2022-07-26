@@ -20,7 +20,8 @@
 
 .innerWrapper {
   /* width: 550px; */
-  height: 480px;
+  /* height: 480px; */
+  height:auto;
   background-color: whitesmoke;
   border-radius: 20px;
   /* text-align: center; */

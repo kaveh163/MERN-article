@@ -2,6 +2,8 @@ const express = require("express");
 const { check, validationResult } = require("express-validator");
 const router = express.Router();
 const User = require("../models/User");
+const passport = require("passport");
+require("../auth/passport");
 
 router.get("/", function (req, res) {
   res.send("users routes working");
@@ -101,9 +103,45 @@ router.post(
     next();
   }
 );
-router.post("/login", function (req, res) {
-  console.log("body", req.body);
-  const { email, password } = req.body;
-  return res.json({ success : 'Data successfully Posted'});
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', { session : false }, function(err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      return res.json(info);
+    }
+    console.log('user', user);
+    return res.json({ success : true});
+  })(req, res, next);
 });
+
+// router.post(
+//   "/login",
+//   passport.authenticate("local", { session: false }),
+//   (req, res) => {
+//     if (req.isAuthenticated()) {
+      // const { _id, username } = req.user;
+      // console.log("id", _id);
+      // const payload = {
+      //   sub: _id,
+      //   aud: "http://localhost:8080",
+      //   iss: "http://remote-server.com",
+      //   expiration:  Date.now() + expirationtimeInMs
+      // };
+      // console.log("payload", payload);
+      // const token = jwt.sign(payload, secret);
+      // res.cookie("jwt", token, {
+      //   httpOnly: true,
+      //   secure: false,
+      // });
+//       console.log("user", req.user);
+//       res.status(200).json({ isAuthenticated: true });
+//     }
+//   }
+// );
+
+// router.post("/login", function (req, res) {
+//   console.log("body", req.body);
+//   const { email, password } = req.body;
+//   return res.json({ success : 'Data successfully Posted'});
+// });
 module.exports = router;

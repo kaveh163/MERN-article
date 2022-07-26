@@ -4,6 +4,7 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
 const Login = () => {
   const [errors, setErrors] = useState(null);
+  const [auth, setAuth] = useState(null);
 
   const emailElement = useRef();
   const passwordElement = useRef();
@@ -24,9 +25,19 @@ const Login = () => {
           },
         });
         const loginRes = await response.json();
-        setErrors(loginRes.errors);
-
         console.log("LoginRes", loginRes);
+        if (loginRes.errors) {
+          setErrors(loginRes.errors);
+        } else if (loginRes.message) {
+          setAuth(loginRes.message);
+          setTimeout(() => {
+            setAuth(null);
+          }, 3000);
+        } else {
+          window.location.href = '/';
+        }
+
+        
       } catch (error) {
         console.log(error);
         process.exit(1);
@@ -39,6 +50,8 @@ const Login = () => {
     <>
       <section className="container-fluid">
         <section className={`${styles.layout} col-12`}>
+          {auth && <div className="alert alert-danger mt-3 mb-0">{auth}</div>}
+
           <section className={`${styles.wrapper}`}>
             <section className="d-flex justify-content-center align-items-center">
               <section className={`${styles.innerWrapper}`}>
@@ -97,7 +110,7 @@ const Login = () => {
                       {errors
                         ? errors.map((error, index) => {
                             if (error.param === "password") {
-                              emailElement.current.value = "";
+                              passwordElement.current.value = "";
                               return error.msg;
                             } else {
                               return "";
