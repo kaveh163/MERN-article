@@ -1,7 +1,40 @@
 import styles from "../login.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect, useRef } from "react";
 const Login = () => {
+  const [errors, setErrors] = useState(null);
+
+  const emailElement = useRef();
+  const passwordElement = useRef();
+  const handleLogin = (event) => {
+    event.preventDefault();
+    console.log("email", emailElement.current.value);
+    console.log("password", passwordElement.current.value);
+    const createLogin = async () => {
+      try {
+        const response = await fetch("/users/login", {
+          method: "POST",
+          body: JSON.stringify({
+            email: emailElement.current.value,
+            password: passwordElement.current.value,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+        const loginRes = await response.json();
+        setErrors(loginRes.errors);
+
+        console.log("LoginRes", loginRes);
+      } catch (error) {
+        console.log(error);
+        process.exit(1);
+      }
+    };
+    createLogin();
+  };
+  console.log("data", errors);
   return (
     <>
       <section className="container-fluid">
@@ -26,11 +59,21 @@ const Login = () => {
                       id="email"
                       placeholder="Enter email"
                       name="email"
+                      ref={emailElement}
                       required
                     />
-                    <div className="valid-feedback">Valid.</div>
+
                     <div className="invalid-feedback">
-                      Please fill out this field.
+                      {errors
+                        ? errors.map((error, index) => {
+                            if (error.param === "email") {
+                              emailElement.current.value = "";
+                              return error.msg;
+                            } else {
+                              return "";
+                            }
+                          })
+                        : ""}
                     </div>
                   </div>
                   <label htmlFor="pwd" className="form-label">
@@ -46,22 +89,38 @@ const Login = () => {
                       id="pwd"
                       placeholder="Enter password"
                       name="pswd"
+                      ref={passwordElement}
                       required
                     />
-                    <div className="valid-feedback">Valid.</div>
+
                     <div className="invalid-feedback">
-                      Please fill out this field.
+                      {errors
+                        ? errors.map((error, index) => {
+                            if (error.param === "password") {
+                              emailElement.current.value = "";
+                              return error.msg;
+                            } else {
+                              return "";
+                            }
+                          })
+                        : ""}
                     </div>
                   </div>
                   <div className="d-grid">
-                    <button type="submit" className="btn btn-primary btn-block">
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-block"
+                      onClick={handleLogin}
+                    >
                       Login
                     </button>
                   </div>
                 </form>
                 <div className={` ${styles.footer}`}>
                   <span>New? </span>
-                  <span><a href="/register">Sign Up</a></span>
+                  <span>
+                    <a href="/register">Sign Up</a>
+                  </span>
                 </div>
               </section>
             </section>

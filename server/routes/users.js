@@ -85,4 +85,25 @@ router.post(
     return res.json({ url: "home" });
   }
 );
+router.post(
+  "/login",
+  [
+    check("email", "Email must be provided. ").notEmpty(),
+    check("email", "Invalid Email.").isEmail().normalizeEmail(),
+    check("password", "Password must be provided.").notEmpty(),
+  ],
+  function (req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.json({ errors: errors.array() });
+    }
+
+    next();
+  }
+);
+router.post("/login", function (req, res) {
+  console.log("body", req.body);
+  const { email, password } = req.body;
+  return res.json({ success : 'Data successfully Posted'});
+});
 module.exports = router;
