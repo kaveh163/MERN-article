@@ -6,6 +6,14 @@ import { useState, useEffect } from "react";
 function Layout() {
   const [toggle, setToggle] = useState(true);
   const [show, setShow] = useState(false);
+
+  const logoutHandler = async () => {
+    const response = await fetch("/users/logout");
+    const data = await response.json();
+    if (data.success) {
+      window.location.href = "/";
+    }
+  };
   useEffect(() => {
     console.log(document.location.search);
     if (document.location.search) {
@@ -23,58 +31,68 @@ function Layout() {
 
   return (
     <>
-      <nav
-        className={`navbar navbar-expand-sm navbar-light justify-content-center ${styles.navColor} ${styles.font}`}
-      >
-        <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapsibleNavbar"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div
-            className={`collapse navbar-collapse ${styles.menu}`}
-            id="collapsibleNavbar"
-          >
-            <ul className="navbar-nav mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                {show && (
-                  <Link className="nav-link" to="/article">
-                    Add Article
+      <div className={`${styles.align}`}>
+        <nav
+          className={`navbar navbar-expand-sm navbar-light justify-content-center ${styles.navColor} ${styles.font}`}
+        >
+          <div className={`container-fluid ${styles.cont}`}>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapsibleNavbar"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div
+              className={`collapse navbar-collapse ${styles.menu}`}
+              id="collapsibleNavbar"
+            >
+              <ul className="navbar-nav mb-2 mb-lg-0">
+                <li className="nav-item">
+                  <Link className="nav-link active" aria-current="page" to="/">
+                    Home
                   </Link>
-                )}
-              </li>
-              <li className="nav-item">
-                {show && (
-                  <Link className="nav-link" to="/articles">
-                    Articles
-                  </Link>
-                )}
-              </li>
-
-              <li className="nav-item">
-                {toggle && (
-                  <Link className="nav-link" to="/login">
-                    Login
-                  </Link>
-                )}
-              </li>
-              <li className="nav-item">
-                {show && <a className="nav-link">Logout</a>}
-              </li>
-            </ul>
+                </li>
+                <li className="nav-item">
+                  {show && (
+                    <Link className="nav-link" to="/article">
+                      Add Article
+                    </Link>
+                  )}
+                </li>
+                <li className="nav-item">
+                  {show && (
+                    <Link className="nav-link" to="/articles">
+                      Articles
+                    </Link>
+                  )}
+                </li>
+              </ul>
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  {toggle && (
+                    <Link className="nav-link" to="/login">
+                      Login
+                    </Link>
+                  )}
+                </li>
+                <li className="nav-item">
+                  {show && (
+                    <a
+                      className={`nav-link ${styles.cursor}`}
+                      onClick={logoutHandler}
+                    >
+                      Logout
+                    </a>
+                  )}
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
-      <Outlet />
+        </nav>
+        <Outlet />
+      </div>
     </>
   );
 }

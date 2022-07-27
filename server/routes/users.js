@@ -114,6 +114,9 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
+router.get('/logout', function (req, res) {
+  res.json({success: true});
+})
 // router.post(
 //   "/login",
 //   passport.authenticate("local", { session: false }),

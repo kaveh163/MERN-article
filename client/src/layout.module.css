@@ -21,15 +21,22 @@ nav.font {
 }
 .navColor {
     background-color: whitesmoke!important;
+    margin-right: 12px;
+    margin-left: 12px;
     /* text-align: center!important; */
 }
 .menu {
     z-index: 3;
     background-color: whitesmoke!important;
     opacity: 0.83;
-    
+    padding-left: 48px;
+    padding-right: 48px;
 
 }
+.cursor {
+    cursor: pointer;
+}
+
 
 /* button {
     width: 100%;
@@ -61,6 +68,15 @@ nav.font {
 @media (max-width: 576px) {
     ul li {
       width: 100%!important;
+    }
+    .menu {
+        padding-left: 0;
+        padding-right: 0;
+
+    }
+    .cont {
+        padding-left: 0;
+        padding-right: 0;
     }
    
 }
