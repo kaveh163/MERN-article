@@ -4,52 +4,71 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 function Layout() {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    console.log(document.location.search);
+    if (document.location.search) {
+      const query = new URLSearchParams(document.location.search);
+      console.log("Here");
+      console.log("query", query);
+      const success = query.get("success");
+      console.log(success);
+      if (success === "true") {
+        setToggle(false);
+        setShow(true);
+      }
+    }
+  }, []);
+
   return (
     <>
       <nav
-        className={`navbar navbar-expand-lg navbar-light ${styles.navColor} ${styles.font}`}
+        className={`navbar navbar-expand-sm navbar-light justify-content-center ${styles.navColor} ${styles.font}`}
       >
         <div className="container-fluid">
           <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            data-bs-target="#collapsibleNavbar"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
             className={`collapse navbar-collapse ${styles.menu}`}
-            id="navbarSupportedContent"
+            id="collapsibleNavbar"
           >
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/article">
-                  Add Article
-                </Link>
+                {show && (
+                  <Link className="nav-link" to="/article">
+                    Add Article
+                  </Link>
+                )}
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/articles">
-                  Articles
-                </Link>
+                {show && (
+                  <Link className="nav-link" to="/articles">
+                    Articles
+                  </Link>
+                )}
               </li>
-              
+
               <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Login
-                </Link>
+                {toggle && (
+                  <Link className="nav-link" to="/login">
+                    Login
+                  </Link>
+                )}
               </li>
               <li className="nav-item">
-                <a className="nav-link">Logout</a>
+                {show && <a className="nav-link">Logout</a>}
               </li>
             </ul>
           </div>

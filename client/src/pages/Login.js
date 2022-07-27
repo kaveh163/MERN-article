@@ -34,7 +34,7 @@ const Login = () => {
             setAuth(null);
           }, 3000);
         } else {
-          window.location.href = '/';
+          window.location.href = `/?success=${true}`;
         }
 
         
