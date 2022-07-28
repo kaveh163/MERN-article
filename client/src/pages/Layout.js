@@ -12,6 +12,8 @@ function Layout() {
     const data = await response.json();
     if (data.success) {
       window.location.href = "/";
+    } else if (data.error) {
+      console.log(data.error);
     }
   };
   useEffect(() => {

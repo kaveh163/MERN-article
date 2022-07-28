@@ -1,14 +1,34 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../models/User");
 const passport = require("passport");
-require("../auth/passport");
 
-router.get("/", function (req, res) {
-  res.send("users routes working");
+const expirationtimeInMs = 60 * 60 * 1000;
+const secret = "jwt_secret_key";
+
+// router.get("/", function (req, res) {
+//   res.send("users routes working");
+// });
+router.get(
+  "/protected",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("Protected route");
+    res.json({
+      message: "welcome to the protected route!",
+    });
+  }
+);
+router.get("/logout", function (req, res) {
+  if(req.cookies['jwt']) {
+    res.clearCookie('jwt').status(200).json({ success: true })
+  } else {
+    res.status(401).json({error: 'Invalid Token'});
+  }
+  
 });
-
 router.post(
   "/register",
   [
@@ -103,48 +123,55 @@ router.post(
     next();
   }
 );
-router.post('/login', function(req, res, next) {
-  passport.authenticate('local', { session : false }, function(err, user, info) {
-    if (err) return next(err);
-    if (!user) {
-      return res.json(info);
+router.post("/login", function (req, res, next) {
+  passport.authenticate(
+    "local",
+    { session: false },
+    function (err, user, info) {
+      if (err) return next(err);
+      if (!user) {
+        return res.json(info);
+      }
+      console.log("user", user);
+      const { _id } = user;
+      console.log(_id);
+      const payload = {
+        sub: _id,
+        expiration: Date.now() + parseInt(expirationtimeInMs),
+      };
+      const token = jwt.sign(payload, secret);
+      res
+        .cookie("jwt", token, {
+          httpOnly: true,
+          secure: false,
+        })
+        .json({ success: true });
     }
-    console.log('user', user);
-    return res.json({ success : true});
-  })(req, res, next);
+  )(req, res, next);
 });
 
-router.get('/logout', function (req, res) {
-  res.json({success: true});
-})
 // router.post(
 //   "/login",
 //   passport.authenticate("local", { session: false }),
 //   (req, res) => {
 //     if (req.isAuthenticated()) {
-      // const { _id, username } = req.user;
-      // console.log("id", _id);
-      // const payload = {
-      //   sub: _id,
-      //   aud: "http://localhost:8080",
-      //   iss: "http://remote-server.com",
-      //   expiration:  Date.now() + expirationtimeInMs
-      // };
-      // console.log("payload", payload);
-      // const token = jwt.sign(payload, secret);
-      // res.cookie("jwt", token, {
-      //   httpOnly: true,
-      //   secure: false,
-      // });
-//       console.log("user", req.user);
-//       res.status(200).json({ isAuthenticated: true });
+//       const { _id } = req.user;
+//       console.log("id", _id);
+//       const payload = {
+//         sub: _id,
+//         expiration: Date.now() + expirationtimeInMs,
+//       };
+//       console.log("payload", payload);
+//       const token = jwt.sign(payload, "jwt_secret_key");
+//       res.cookie("jwt", token, {
+//         httpOnly: true,
+//         secure: false,
+//       });
+//       res.status(200).json({ success: true });
+//     } else {
+//       res.json({ message: "Invalid Email and/or Password" });
 //     }
 //   }
 // );
 
-// router.post("/login", function (req, res) {
-//   console.log("body", req.body);
-//   const { email, password } = req.body;
-//   return res.json({ success : 'Data successfully Posted'});
-// });
 module.exports = router;

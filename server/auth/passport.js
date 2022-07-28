@@ -1,7 +1,47 @@
 const passport = require("passport");
+const JwtStrategy = require("passport-jwt").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/User");
 
+
+
+const cookieExtractor = function (req) {
+  var token = null;
+  if (req && req.cookies) {
+    token = req.cookies["jwt"];
+  }
+  return token;
+};
+const opts = {};
+opts.jwtFromRequest = cookieExtractor;
+opts.secretOrKey = "jwt_secret_key";
+// opts.issuer = "http://remote-server.com";
+// opts.audience = "http://localhost:8080";
+
+console.log("entered passport");
+passport.use(
+  new JwtStrategy(opts, function (jwtPayload, done) {
+    console.log("entered strategy");
+    const { sub, expiration } = jwtPayload;
+    User.findOne({ _id: sub }, function (err, user) {
+      if (err) {
+        return done(err, false);
+      }
+      
+      if (!user) {
+        return done(null, false);
+      }
+
+      if (Date.now() > expiration) {
+        return done(null, false);
+      }
+      
+      done(null, user);
+    });
+
+    
+  })
+);
 passport.use(
   new LocalStrategy(
     {
@@ -21,6 +61,7 @@ passport.use(
         user
           .comparePassword(password)
           .then((res) => {
+            console.log('passport-local');
             return done(null, user);
           })
           .catch((err) => {
