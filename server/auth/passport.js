@@ -18,10 +18,9 @@ opts.secretOrKey = "jwt_secret_key";
 // opts.issuer = "http://remote-server.com";
 // opts.audience = "http://localhost:8080";
 
-console.log("entered passport");
+
 passport.use(
   new JwtStrategy(opts, function (jwtPayload, done) {
-    console.log("entered strategy");
     const { sub, expiration } = jwtPayload;
     User.findOne({ _id: sub }, function (err, user) {
       if (err) {

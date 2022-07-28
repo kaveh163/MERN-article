@@ -8,6 +8,6 @@ router.get("/", function (req, res) {
 });
 
 router.get("/protected", passport.authenticate('jwt', {session: false}), function (req, res) {
-    res.status(200).json({message: "Protected Route"})
+    res.status(200).json({message: req.user})
 })
 module.exports = router;
