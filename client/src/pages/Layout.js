@@ -52,20 +52,24 @@ function Layout() {
             >
               <ul className="navbar-nav mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/">
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    to={show ? "/?success=true" : "/"}
+                  >
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
                   {show && (
-                    <Link className="nav-link" to="/article">
+                    <Link className="nav-link" to="/article/?success=true">
                       Add Article
                     </Link>
                   )}
                 </li>
                 <li className="nav-item">
                   {show && (
-                    <Link className="nav-link" to="/articles">
+                    <Link className="nav-link" to="/articles/?success=true">
                       Articles
                     </Link>
                   )}
