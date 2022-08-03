@@ -13,7 +13,7 @@ const Article = () => {
           <div className={`${styles.article}`}>Add Your Article</div>
           <div className={`row m-0 p-0 ${styles.lyt}`}>
             <div className={`col-12 col-md-6 offset-md-3 ${styles.frm}`}>
-              <form action="">
+              <form action="/api/articles/protected" method="POST">
                 <div className={`${styles.formWrapper}`}>
                   <label htmlFor="title" className={`form-label ${styles.lbl}`}>
                     Title:
@@ -22,6 +22,7 @@ const Article = () => {
                     type="text"
                     className={`form-control ${styles.title}`}
                     id="title"
+                    name="title"
                     minLength='44'
                     maxLength='109'
                     required
@@ -32,7 +33,7 @@ const Article = () => {
                     Body:
                   </label>
                   <textarea
-                    name=""
+                    name="body"
                     id="body"
                     // cols="30"
                     // rows="10"

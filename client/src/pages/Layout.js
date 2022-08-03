@@ -8,7 +8,7 @@ function Layout() {
   const [show, setShow] = useState(false);
 
   const logoutHandler = async () => {
-    const response = await fetch("/users/logout");
+    const response = await fetch("/api/users/logout");
     const data = await response.json();
     if (data.success) {
       window.location.href = "/";

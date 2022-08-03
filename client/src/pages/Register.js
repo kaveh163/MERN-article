@@ -36,7 +36,7 @@ const Register = () => {
 
     const createRegister = async () => {
       try {
-        const response = await fetch("/users/register", {
+        const response = await fetch("/api/users/register", {
           method: "POST",
           body: JSON.stringify(obj),
           headers: {

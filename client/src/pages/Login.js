@@ -14,7 +14,7 @@ const Login = () => {
     console.log("password", passwordElement.current.value);
     const createLogin = async () => {
       try {
-        const response = await fetch("/users/login", {
+        const response = await fetch("/api/users/login", {
           method: "POST",
           body: JSON.stringify({
             email: emailElement.current.value,

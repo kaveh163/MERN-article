@@ -21,8 +21,8 @@ app.use(passport.initialize());
 require("./auth/passport");
 
 // Routes middlewares
-app.use("/articles", articles);
-app.use("/users", users);
+app.use("/api/articles", articles);
+app.use("/api/users", users);
 
 connectDB();
 
