@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import styles from './listBody.module.css'
 
 
 function ListBody({value}) {

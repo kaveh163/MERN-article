@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from '../home.module.css';
 import ListBody from "../ListBody";
+import ListDate from "../ListDate";
 const Home = () => {
   const [flash, setFlash] = useState(false);
   const [data, setData] = useState(null);
@@ -39,16 +40,15 @@ const Home = () => {
     const cardElements = data.articles.map((item, index) => {
       return (
         <section className={`col ${styles.culmn}`} key={index}>
-          <div className="card">
+          <div className={`card ${styles.crd}`}>
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
 
               <ListBody key={index} value={item.body}/>
               <p className={`text-capitalize ${styles.author}`}>Created By: {`${item.user.firstname} ${item.user.lastname}`}</p>
             </div>
-            <div className="card-footer">
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </div>
+            <ListDate key= {index} date={item.updatedAt}/>
+            
           </div>
         </section>
       );

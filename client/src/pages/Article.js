@@ -39,7 +39,7 @@ const Article = () => {
                     // rows="10"
                     className={`form-control ${styles.body}`}
                     onChange= {(event)=> handleTextarea(event)}
-                    minLength='70'
+                    minLength='200'
                     required
                   ></textarea>
                 </div>
