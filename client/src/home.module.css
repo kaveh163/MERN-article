@@ -1,0 +1,17 @@
+* {
+  font-family: "Work Sans", sans-serif;
+  box-sizing: border-box !important;
+  
+}
+
+.culmn {
+    z-index: 0!important;
+}
+
+.author {
+    font-size: smaller;
+    /* color: #6c757d!important; */
+    font-weight: 300;
+    color: black!important;
+    
+}

@@ -14,8 +14,11 @@ router.get("/protected", passport.authenticate('jwt', {session: false}), functio
 router.get("/list", async function (req, res) {
     try {
         const articles = await Article.find({}).populate('user');
-        console.log('Successfully Fetched all the Articles 👍')
-        res.json({articles: articles, updatedAt: `${new Date(articles[0].updatedAt).toLocaleDateString()} ${new Date(articles[0].updatedAt).toLocaleTimeString('en-US', {timeZone: 'Canada/Eastern', hour12: true})}`});
+        console.log('Successfully Fetched all the Articles 👍');
+        console.log(articles);
+        // res.json({hour:new Date(articles[0].updatedAt).getTime(),articles: articles, updatedAt: `${new Date(articles[0].updatedAt).toLocaleDateString()} ${new Date(articles[0].updatedAt).toLocaleTimeString('en-US', {timeZone: 'Canada/Eastern', hour12: false})}`});
+        // res.json({articles: articles, updatedAt: `${new Date(articles[0].updatedAt).toLocaleDateString()} ${new Date(articles[0].updatedAt).toLocaleTimeString()}`});
+        res.json({articles: articles});
     } catch (error) {
         console.log(`${error} ❌`);
         process.exit(1);

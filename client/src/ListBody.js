@@ -1,0 +1,67 @@
+import { useEffect, useState } from "react";
+
+
+
+function ListBody({value}) {
+    const [limit, setLimit] = useState(null);
+    console.log('value', value);
+    console.log(value.split('.'))
+    let subString = value.substring(0, 400);
+    // console.log('subString', subString);
+    // const subStringArr = subString.split(".");
+    // const ArrLastItem = subStringArr[(subStringArr.length - 1)];
+    // console.log('print', ArrLastItem)
+    // const newString = subStringArr.slice(0, subStringArr.length - 1).join('.');
+    // console.log('newString', newString)
+    // const string = " H5-million lawsuit in April that said in 2018, eight hockey players including members of Canada's World Junior team sexually assaulted,"
+    // const pattern = /^(\s[A-Z])/g
+    // console.log(pattern.test(string));
+    useEffect(() => {
+        const limitString = () => {
+            const subStringArr = subString.split('.');
+            console.log('subStringArr', subStringArr);
+            if(subStringArr.length == 1) {
+                const newString = subStringArr.join('.');
+                console.log('newString', newString)
+                const newStringArr = newString.split(' ');
+                console.log('newStringArr', newStringArr);
+                const slicedArr = newStringArr.slice(0, newStringArr.length - 1);
+                console.log(slicedArr.join(' '));
+                const result = slicedArr.join(' ');
+                setLimit(result);
+                return;
+            } else {
+                const ArrLastItem = subStringArr[subStringArr.length - 1];
+                console.log('ArrLastItem', ArrLastItem);
+                const pattern = /^((\s[A-Z])|(\s(\r\n)+[A-Z]))/;
+                console.log('pattern Test', pattern.test(ArrLastItem));
+                if (!pattern.test(ArrLastItem)) {
+                    subStringArr.pop();
+                    subString = subStringArr.join('.');
+                    console.log('subString', subString);
+                    limitString();
+                } else {
+                    const result = subStringArr.slice(0, subStringArr.length -1).join('.') + '.';
+                    console.log('result', result);
+                    setLimit(result);
+                    return;
+    
+                }
+    
+            }
+    
+        }
+        limitString();
+    }, []);
+    
+    
+    
+    return (
+        <p className="card-text">
+                {limit && limit}
+        </p>
+    )
+
+}
+
+export default ListBody
