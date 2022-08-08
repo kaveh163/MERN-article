@@ -16,11 +16,29 @@
     
 }
 .crd {
-  height: 55vh;
+  margin-top: 8px;
+  /* height: 55vh; */
+  border-left: 0;
+  border-right: 0;
+  position: relative;
+}
+.wrapper {
+  margin-top: 8px;
 }
 @media only screen and (max-width: 576px) {
   .crd {
     height: auto;
+    /* margin-bottom: 16px; */
     
+    
+  }
+  .wrapper {
+    margin-bottom: 20px;
+    margin-top: 0;
+  }
+}
+@media only screen and (min-width: 577px) {
+  .crd {
+    height: 40vh;
   }
 }

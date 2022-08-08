@@ -1,0 +1,7 @@
+.card-footer {
+    border-top: none;
+    
+}
+.card:hover {
+    border: 1px solid red;
+}

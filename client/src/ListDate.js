@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from './listDate.module.css';
 
 function ListDate({ date }) {
   const [time, setTime] = useState(null);
@@ -35,7 +36,8 @@ function ListDate({ date }) {
         result = `${MinutesDiff} Minutes Ago`;
         setTime(result);
       } else if (MinutesDiff == 0) {
-        result = `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`;
+        // result = `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`;
+        result = "1 Minute Ago"
         setTime(result);
       }
     } else {
@@ -45,8 +47,8 @@ function ListDate({ date }) {
   }, []);
 
   return (
-    <div className="card-footer">
-      <small className="text-muted">{time && time}</small>
+    <div className={`card-footer`}>
+      <small className={`text-muted`}>{time && time}</small>
     </div>
   );
 }
