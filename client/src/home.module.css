@@ -21,6 +21,8 @@
   border-left: 0;
   border-right: 0;
   position: relative;
+  text-decoration: none;
+  color: black;
 }
 .wrapper {
   margin-top: 8px;

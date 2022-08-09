@@ -42,5 +42,15 @@ router.post("/protected", passport.authenticate('jwt', {session: false}), async 
         process.exit(1);
     }
     res.redirect('/?success=true');
+});
+
+router.post("/article", async function (req, res) {
+    console.log('body', req.body);
+    const {articleId} = req.body;
+    const article = await Article.findById(articleId).populate('user');
+    console.log('database article' , article);
+
+
+    res.json({data: article});
 })
 module.exports = router;

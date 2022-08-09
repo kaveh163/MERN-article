@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import {Link} from 'react-router-dom'
 import styles from '../home.module.css';
 import ListBody from "../ListBody";
 import ListDate from "../ListDate";
@@ -40,7 +41,7 @@ const Home = () => {
     const cardElements = data.articles.map((item, index) => {
       return (
         <section className={`col ${styles.culmn}`} key={index}>
-          <div className={`card ${styles.crd}`}>
+          <Link to={`/articles/list/${item._id}`} className={`card ${styles.crd}`}>
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
 
@@ -49,7 +50,7 @@ const Home = () => {
             </div>
             <ListDate key= {index} date={item.updatedAt}/>
             
-          </div>
+          </Link>
         </section>
       );
     });
