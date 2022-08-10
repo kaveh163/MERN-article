@@ -35,12 +35,11 @@ function ArticlesList() {
           <section className={`col-12 col-sm-10 offset-sm-1 mt-5 ${styles.colWrap}`}>
             <div className={`d-flex flex-column ${styles.wrap}`}>
               <h1 className={`${styles.header}`}>
-                Out-of-control fires have Newfoundland towns on edge as crisis
-                moves into 3rd week Social Sharing
+                {data && data.title}
               </h1>
               <div>
                 <span className="text-capitalize">
-                  <small className={`${styles.userSize}`}>John Due</small>
+                  <small className={`${styles.userSize}`}>{`${data && data.user.firstname} ${data && data.user.lastname}`}</small>
                   <small className={`${styles.userSize} ${styles.dateColor}`}>
                     {" "}
                     | 1 Minute Ago
@@ -48,13 +47,7 @@ function ArticlesList() {
                 </span>
               </div>
               <div className={`${styles.article} mt-3`}>
-                A young woman from Saguenay, Que., says she left a local
-                pharmacy feeling shamed after a pharmacist refused to sell her
-                emergency oral contraception, better known as the morning-after
-                pill, because it went against his religious beliefs. 
-                "I felt bad, I felt really judged," said the
-                24-year-old woman, who asked to remain anonymous for fear of
-                reprisal.
+                {data && data.body}
               </div>
             </div>
           </section>
