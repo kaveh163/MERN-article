@@ -41,6 +41,9 @@
 }
 @media only screen and (min-width: 577px) {
   .crd {
-    height: 40vh;
+    height: 44vh;
+  }
+  .wrapper {
+    margin-bottom: 20px;
   }
 }

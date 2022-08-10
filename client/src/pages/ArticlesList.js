@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../articlesList.module.css";
+import TimeStamp from '../TimeStamp'
 
 function ArticlesList() {
   const [data, setData] = useState(null);
@@ -42,7 +43,7 @@ function ArticlesList() {
                   <small className={`${styles.userSize}`}>{`${data && data.user.firstname} ${data && data.user.lastname}`}</small>
                   <small className={`${styles.userSize} ${styles.dateColor}`}>
                     {" "}
-                    | 1 Minute Ago
+                    | {data && <TimeStamp createdDate= {data.createdAt} updatedDate= {data.updatedAt} />}
                   </small>
                 </span>
               </div>
