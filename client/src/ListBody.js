@@ -25,7 +25,7 @@ function ListBody({value}) {
                 const newString = subStringArr.join('.');
                 console.log('newString', newString);
                 if (newString.length < 200) {
-                    const result = subStringCopy.substring(0, 201) + ('... ');
+                    const result = subStringCopy.substring(0, 201) + ('. . . ');
                     setLimit(result);
                     return;
                 }
@@ -34,12 +34,12 @@ function ListBody({value}) {
                 const slicedArr = newStringArr.slice(0, newStringArr.length - 1);
                 console.log(slicedArr.join(' '));
                 const result = slicedArr.join(' ');
-                setLimit(result);
+                setLimit(`${result} . . . `);
                 return;
             } else {
                 const ArrLastItem = subStringArr[subStringArr.length - 1];
                 console.log('ArrLastItem', ArrLastItem);
-                const pattern = /^((\s[A-Z])|(\s(\r\n)+(\")?[A-Z]))/;
+                const pattern = /^((\s[A-Z])|((\s)?(\r\n)+(\")?[A-Z]))/;
                 console.log('pattern Test', pattern.test(ArrLastItem));
                 if (!pattern.test(ArrLastItem)) {
                     subStringArr.pop();
@@ -50,7 +50,7 @@ function ListBody({value}) {
                     
                     let result = subStringArr.slice(0, subStringArr.length -1).join('.');
                     if (result.length < 200) {
-                        result = subStringCopy.substring(0, 201) + ('... ');
+                        result = subStringCopy.substring(0, 201) + ('. . . ');
                         setLimit(result);
                         return;
                     }

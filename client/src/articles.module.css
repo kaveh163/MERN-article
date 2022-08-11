@@ -1,0 +1,23 @@
+
+
+.lWCh {
+    z-index: 1!important;
+}
+
+@media only screen and (max-width: 576px) {
+    .listWrap {
+        margin: 0px!important;
+        font-size: 12px
+    }
+    .btns {
+        margin: 0px!important;
+    
+    }
+    .upd {
+        padding: 0px!important;
+        font-size: 12px;
+    }
+    .del {
+        font-size: 12px;
+    }
+}

@@ -10,7 +10,14 @@ const Article = require('../models/Article');
 router.get("/protected", passport.authenticate('jwt', {session: false}), function (req, res) {
     res.status(200).json({message: req.user})
 })
-
+router.get("/user", passport.authenticate('jwt', {session: false}), async function (req, res) {
+    console.log(req.user);
+    const {_id} = req.user;
+    console.log('id', _id);
+    const usersArticles = await Article.find({user: _id});
+    console.log('usersArticles',usersArticles);
+    res.json({data: usersArticles});
+})
 router.get("/list", async function (req, res) {
     try {
         const articles = await Article.find({}).populate('user');
