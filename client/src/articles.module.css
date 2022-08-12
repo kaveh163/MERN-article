@@ -3,6 +3,9 @@
 .lWCh {
     z-index: 1!important;
 }
+.lWCh:last-child {
+    border-bottom: 1px solid rgba(0,0,0,.125)!important;
+}
 
 @media only screen and (max-width: 576px) {
     .listWrap {
