@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-function TimeStamp({ createdDate, updatedDate, currentDate }) {
+function TimeStamp({ createdDate, updatedDate}) {
   console.log(createdDate);
   console.log(updatedDate);
   const [update, setUpdate] = useState(null);
   // const [create, setCreate] = useState(null);
-  // const currentDate = new Date();
+  const currentDate = new Date();
   const updatedAt = new Date(updatedDate);
   const diffDate = currentDate - updatedAt;
   const dayInMs = 86400000;

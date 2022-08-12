@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from './listDate.module.css';
 
-function ListDate({ date, currentDate }) {
+function ListDate({ date}) {
   const [time, setTime] = useState(null);
-  // const currentDate = new Date();
+  const currentDate = new Date();
   const updatedAt = new Date(date);
   const diffDate = currentDate - updatedAt;
   const dayInMs = 86400000;

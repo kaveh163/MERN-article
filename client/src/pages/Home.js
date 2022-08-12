@@ -47,7 +47,7 @@ const Home = () => {
     }
   }, []);
   const handleCards = () => {
-    const currentDate = new Date();
+    // const currentDate = new Date();
 
     const cardElements = data.articles.map((item, index) => {
       return (
@@ -58,7 +58,7 @@ const Home = () => {
                 ? `/articles/list/${item._id}/?success=true`
                 : `/articles/list/${item._id}`
             }
-            state={{currentDate: currentDate}}
+            
             className={`card ${styles.crd}`}
           >
             <div className="card-body">
@@ -69,7 +69,7 @@ const Home = () => {
                 Created By: {`${item.user.firstname} ${item.user.lastname}`}
               </p>
             </div>
-            <ListDate key={index} date={item.updatedAt} currentDate= {currentDate}/>
+            <ListDate key={index} date={item.updatedAt}/>
           </Link>
         </section>
       );
