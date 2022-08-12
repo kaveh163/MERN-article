@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import {Link} from 'react-router-dom'
-import styles from '../home.module.css';
+import { Link } from "react-router-dom";
+import styles from "../home.module.css";
 import ListBody from "../ListBody";
 import ListDate from "../ListDate";
 const Home = () => {
   const [flash, setFlash] = useState(false);
   const [data, setData] = useState(null);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (document.location.search) {
@@ -34,22 +35,41 @@ const Home = () => {
       }
     };
     articles();
+    console.log(document.location.search);
+    if (document.location.search) {
+      const query = new URLSearchParams(document.location.search);
+
+      const success = query.get("success");
+
+      if (success === "true") {
+        setShow(true);
+      }
+    }
   }, []);
   const handleCards = () => {
     const currentDate = new Date();
-    
+
     const cardElements = data.articles.map((item, index) => {
       return (
         <section className={`col ${styles.culmn}`} key={index}>
-          <Link to={`/articles/list/${item._id}`} className={`card ${styles.crd}`}>
+          <Link
+            to={
+              show
+                ? `/articles/list/${item._id}/?success=true`
+                : `/articles/list/${item._id}`
+            }
+            state={{currentDate: currentDate}}
+            className={`card ${styles.crd}`}
+          >
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
 
-              <ListBody key={index} value={item.body}/>
-              <p className={`text-capitalize ${styles.author}`}>Created By: {`${item.user.firstname} ${item.user.lastname}`}</p>
+              <ListBody key={index} value={item.body} />
+              <p className={`text-capitalize ${styles.author}`}>
+                Created By: {`${item.user.firstname} ${item.user.lastname}`}
+              </p>
             </div>
-            <ListDate key= {index} date={item.updatedAt}/>
-            
+            <ListDate key={index} date={item.updatedAt} currentDate= {currentDate}/>
           </Link>
         </section>
       );
@@ -65,7 +85,9 @@ const Home = () => {
           </div>
         )}
         {/* <h1>Home</h1> */}
-        <section className={`row row-cols-1 row-cols-md-2 g-md-2 ${styles.wrap}`}>
+        <section
+          className={`row row-cols-1 row-cols-md-2 g-md-2 ${styles.wrap}`}
+        >
           {data && handleCards()}
         </section>
       </section>

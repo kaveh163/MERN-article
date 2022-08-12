@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "../articlesList.module.css";
 import TimeStamp from '../TimeStamp'
+import {useLocation} from 'react-router-dom'
 
-function ArticlesList() {
+function ArticlesList(props) {
   const [data, setData] = useState(null);
   const { id } = useParams();
+  const location = useLocation();
+  const currentDate = location.state.currentDate;
   console.log(id);
   useEffect(() => {
     const fetchArticle = async () => {
@@ -43,7 +46,7 @@ function ArticlesList() {
                   <small className={`${styles.userSize}`}>{`${data && data.user.firstname} ${data && data.user.lastname}`}</small>
                   <small className={`${styles.userSize} ${styles.dateColor}`}>
                     {" "}
-                    | {data && <TimeStamp createdDate= {data.createdAt} updatedDate= {data.updatedAt} />}
+                    | {data && <TimeStamp createdDate= {data.createdAt} updatedDate= {data.updatedAt} currentDate= {currentDate}/>}
                   </small>
                 </span>
               </div>
