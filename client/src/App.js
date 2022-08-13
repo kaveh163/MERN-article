@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Layout from "./pages/Layout";
 import ArticlesList from './pages/ArticlesList';
+import UpdateArticle from './pages/UpdateArticle';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="articles/list/:id" element= {< ArticlesList/>}/>
+          <Route path="articles/update/:id" element={<UpdateArticle/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
