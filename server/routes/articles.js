@@ -59,5 +59,33 @@ router.post("/article", async function (req, res) {
 
 
     res.json({data: article});
+});
+router.get('/update/article/:id', passport.authenticate('jwt', {session: false}), async function (req, res) {
+    console.log('updatedId', req.params.id);
+    const id = req.params.id;
+    let article;
+    try {
+        article = await Article.findById(id).exec();
+        console.log('updatedArticle', article);
+    } catch (error) {
+        console.log('Error Occured');
+        process.exit(1);
+    }
+    res.json({data: article});
+})
+router.post('/update/article/:id', passport.authenticate('jwt', {session: false}), async function(req, res) {
+    console.log('postid', req.params.id);
+    const id= req.params.id;
+    console.log('postData', req.body);
+    const {title, body} = req.body;
+    try {
+        await Article.findByIdAndUpdate(id, {title: title, body: body});
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+    
+    res.redirect('/?success=true');
+
 })
 module.exports = router;
