@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    font-family: "Work Sans", sans-serif;
+}
+.body {
+    height: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    padding: 25px 28px 25px 28px;
+    
+   
+}
+.grid {
+    z-index: 0!important;
+}
+
+.frmWrapper {
+    /* border: 1px solid #ddd; */
+    height: auto;
+    
+    
+}
+.txtArea {
+    min-height: 200px!important;
+}
+input,textarea {
+    border: 1px solid #a6a6a6!important;
+}
+.btnBg {
+    background: linear-gradient(to bottom,#f7dfa5,#f0c14b);
+};
