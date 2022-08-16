@@ -32,10 +32,10 @@ function ListDate({ date}) {
       } else if (HoursDiff == 1) {
         result = `${HoursDiff} Hour Ago`;
         setTime(result);
-      } else if (HoursDiff < 1 && MinutesDiff > 0) {
+      } else if (HoursDiff < 1 && MinutesDiff > 1) {
         result = `${MinutesDiff} Minutes Ago`;
         setTime(result);
-      } else if (MinutesDiff == 0) {
+      } else if (MinutesDiff <= 1) {
         // result = `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`;
         result = "1 Minute Ago"
         setTime(result);
