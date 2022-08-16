@@ -8,6 +8,21 @@ function ListUsersArticles({ articleData }) {
     console.log("handleupdateId", article._id);
     navigate(`/articles/update/${article._id}/?success=true`);
   };
+
+  const handleDelete = async (article) => {
+    const id = article._id;
+    try {
+      const response = await fetch(`/api/articles/article/delete/${id}`, {
+        method: "DELETE",
+      });
+      const deleteMess = await response.text();
+      console.log(deleteMess);
+      window.location.href= '/articles/?success=true';
+      // navigate('/articles/?success=true');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const userArticles = articleData.map((article, index) => {
     return (
       <div
@@ -32,7 +47,11 @@ function ListUsersArticles({ articleData }) {
             >
               Update
             </button>
-            <button className={`btn ${styles.del}`} style={{ color: "red" }}>
+            <button
+              className={`btn ${styles.del}`}
+              style={{ color: "red" }}
+              onClick={() => handleDelete(article)}
+            >
               Delete
             </button>
           </div>
