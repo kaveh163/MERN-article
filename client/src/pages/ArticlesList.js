@@ -1,26 +1,25 @@
 import { useEffect, useState, useRef } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router";
 import styles from "../articlesList.module.css";
 import TimeStamp from "../TimeStamp";
 import { useLocation } from "react-router-dom";
 
 function ArticlesList(props) {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState("");
   const [shadow, setShadow] = useState(false);
   const [txt, setTxt] = useState(false);
   const { id } = useParams();
-  console.log('afterState');
+  console.log("afterState");
   // const location = useLocation();
   const articleParent = useRef();
   const articleChild = useRef();
   // const currentDate = location.state.currentDate;
   // console.log(id);
 
-
   useEffect(() => {
-    console.log('inside effect at beginning');
+    console.log("inside effect at beginning");
     const fetchArticle = async () => {
       try {
         const response = await fetch("/api/articles/article", {
@@ -34,33 +33,28 @@ function ArticlesList(props) {
         });
         const data = await response.json();
         // console.log(data);
-        console.log('before setData');
+        console.log("before setData");
         setData(data.data);
-        console.log('after setData');
+        console.log("after setData");
       } catch (error) {
         console.log(error);
       }
     };
-    fetchArticle();
-    console.log('inside effect after fetchArticle');
-
-  }, []);
-
-  useEffect(() => {
-    if(data) {
-      console.log('inside second effect');
-      
-      if(articleChild.current.clientHeight > articleParent.current.clientHeight) {
-        setShadow(true);
-      } else {
-        setShadow(false);
-      }
-
+    if (data.length === 0) {
+      fetchArticle();
     }
-    
-  }, [data && data.title])
+    if (
+      articleChild.current.clientHeight > articleParent.current.clientHeight
+    ) {
+      setShadow(true);
+    } else {
+      setShadow(false);
+    }
+    console.log("inside effect after fetchArticle");
+  }, [data]);
+
   // console.log(data);
-  console.log('before return');
+  console.log("before return");
   return (
     <section className="container-fluid">
       <section className="cntr">
@@ -87,14 +81,33 @@ function ArticlesList(props) {
                   </small>
                 </span>
               </div>
-              <div className={shadow ? (txt ? (`${styles.articleParent} ${styles.hgt}`):(`${styles.articleParent} ${styles.shadow} ${styles.overflw}`)):(`${styles.articleParent}`)} ref={articleParent}>
-                <div className={`${styles.article} ${styles.articleChild} mt-3`} ref={articleChild}>
+              <div
+                className={
+                  shadow
+                    ? txt
+                      ? `${styles.articleParent} ${styles.hgt}`
+                      : `${styles.articleParent} ${styles.shadow} ${styles.overflw}`
+                    : `${styles.articleParent}`
+                }
+                ref={articleParent}
+              >
+                <div
+                  className={`${styles.article} ${styles.articleChild} mt-3`}
+                  ref={articleChild}
+                >
                   {data && data.body}
                 </div>
               </div>
             </div>
-            {shadow && <p className={`${styles.read}`} onClick={()=>setTxt(!txt)}> <span><FontAwesomeIcon icon={txt ? faAngleUp : faAngleDown} /></span> {shadow && (txt ? ('Read less') : ('Read more'))}</p> }
-            
+            {shadow && (
+              <p className={`${styles.read}`} onClick={() => setTxt(!txt)}>
+                {" "}
+                <span>
+                  <FontAwesomeIcon icon={txt ? faAngleUp : faAngleDown} />
+                </span>{" "}
+                {shadow && (txt ? "Read less" : "Read more")}
+              </p>
+            )}
           </section>
         </section>
       </section>
