@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require("../models/User");
 const passport = require("passport");
 
-const expirationtimeInMs = 60 * 60 * 1000;
+const expirationtimeInMs = 60 * 1000;
 const secret = "jwt_secret_key";
 
 // router.get("/", function (req, res) {
@@ -22,12 +22,11 @@ router.get(
   }
 );
 router.get("/logout", function (req, res) {
-  if(req.cookies['jwt']) {
-    res.clearCookie('jwt').status(200).json({ success: true })
+  if (req.cookies["jwt"]) {
+    res.clearCookie("jwt").status(200).json({ success: true });
   } else {
-    res.status(401).json({error: 'Invalid Token'});
+    res.status(401).json({ error: "Invalid Token" });
   }
-  
 });
 router.post(
   "/register",
@@ -148,6 +147,19 @@ router.post("/login", function (req, res, next) {
         .json({ success: true });
     }
   )(req, res, next);
+});
+
+//-----------------
+
+router.get("/test", function (req, res, next) {
+  passport.authenticate("jwt", { session: false }, function (err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      return res.send('<h1>UnAuthorized!</h1>');
+    }
+
+    res.json({ success: true });
+  })(req, res, next);
 });
 
 // router.post(

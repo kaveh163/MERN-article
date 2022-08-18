@@ -5,21 +5,40 @@ import ListUsersArticles from '../ListUsersArticles'
 
 const Articles = () => {
   const [data, setData] = useState(null);
-
+  const [limit, setLimit] = useState(false);
+  console.log('after setstate');
   useEffect(() => {
+    console.log('beggining of useeffect');
     const fetchUserArticles = async () => {
       try {
         const response = await fetch("/api/articles/user");
         const data = await response.json();
         console.log(data);
-        setData(data.data);
+        if(data.data) {
+          setData(data.data);
+          console.log('after setData');
+        }
+        console.log('before setTimeout');
+        setTimeout(() => {
+          setLimit(true);
+          console.log('after limit');
+        }, 60000);
+        console.log('after setTimeout');
+        if (data.user === "invalid") {
+          console.log('inside invalid');
+          
+          window.location.href = "/";
+        }
+       console.log('last statement in try');
       } catch (error) {
         console.log(error);
       }
     };
     fetchUserArticles();
-  }, []);
-  console.log("Users Articles", data);
+    console.log('after fetch function');
+  }, [limit]);
+  // console.log("Users Articles", data);
+  console.log('return');
   return (
     <>
       <section className="container-fluid">

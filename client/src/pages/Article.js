@@ -1,11 +1,32 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../article.module.css";
 
 const Article = () => {
+  const [limit, setLimit] = useState(false);
   // const textareaElement = useRef();
   const handleTextarea = (event) => {
     event.target.style.height = event.target.scrollHeight + "px";
   }
+  const fetchState = async () => {
+    try {
+      const response = await fetch('/api/articles/protected');
+      const state = await response.json();
+      setTimeout(() => {
+        setLimit(true);
+        console.log('after limit');
+      }, 60000)
+      if(state.user === "invalid") {
+        window.location.href = '/';
+      }
+      console.log('last try statement');
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+  useEffect(() => {
+    fetchState();
+  }, [limit])
   return (
     <>
       <section className="container-fluid">

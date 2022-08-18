@@ -7,25 +7,49 @@ const Article = require("../models/Article");
 //     res.send('article routes working');
 // });
 
-router.get(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  function (req, res) {
-    res.status(200).json({ message: req.user });
-  }
-);
-router.get(
-  "/user",
-  passport.authenticate("jwt", { session: false }),
-  async function (req, res) {
-    console.log(req.user);
-    const { _id } = req.user;
+router.get("/protected", function (req, res, next) {
+  passport.authenticate("jwt", { session: false }, async function (err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      return res.json({user: "invalid"});
+    }
+    
+    res.json({ data: "valid" });
+    
+  })(req, res, next);
+});
+// router.get(
+//   "/user",
+//   passport.authenticate("jwt", { session: false }),
+//   async function (req, res) {
+//     console.log(req.user);
+//     const { _id } = req.user;
+//     console.log("id", _id);
+//     const usersArticles = await Article.find({ user: _id });
+//     console.log("usersArticles", usersArticles);
+//     res.json({ data: usersArticles });
+//   }
+// );
+
+
+router.get("/user", function (req, res, next) {
+  passport.authenticate("jwt", { session: false }, async function (err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      return res.json({user: "invalid"});
+    }
+    console.log(user);
+    const { _id } = user;
     console.log("id", _id);
     const usersArticles = await Article.find({ user: _id });
     console.log("usersArticles", usersArticles);
     res.json({ data: usersArticles });
-  }
-);
+    
+  })(req, res, next);
+});
+
+
+
 router.get("/list", async function (req, res) {
   try {
     const articles = await Article.find({}).populate("user");
@@ -39,11 +63,35 @@ router.get("/list", async function (req, res) {
     process.exit(1);
   }
 });
-router.post(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  async function (req, res) {
-    const { _id } = req.user;
+// router.post(
+//   "/protected",
+//   passport.authenticate("jwt", { session: false }),
+//   async function (req, res) {
+//     const { _id } = req.user;
+//     const { title, body } = req.body;
+//     console.log("_id", _id);
+//     console.log("seperator");
+//     console.log("title", title);
+//     console.log("seperator");
+//     console.log("body", body);
+//     try {
+//       await Article.create({ title: title, body: body, user: _id });
+//       console.log("Article Successfully Created in Database.");
+//     } catch (error) {
+//       console.log(`${error} `);
+//       process.exit(1);
+//     }
+//     res.redirect("/?success=true");
+//   }
+// );
+
+router.post("/protected", function (req, res, next) {
+  passport.authenticate("jwt", { session: false }, async function (err, user, info) {
+    if (err) return next(err);
+    if (!user) {
+      return res.redirect('/');
+    }
+    const { _id } = user;
     const { title, body } = req.body;
     console.log("_id", _id);
     console.log("seperator");
@@ -58,8 +106,11 @@ router.post(
       process.exit(1);
     }
     res.redirect("/?success=true");
-  }
-);
+    
+  })(req, res, next);
+});
+
+
 
 router.post("/article", async function (req, res) {
   console.log("body", req.body);

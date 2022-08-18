@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 function UpdateArticle() {
   const [inp, setInp] = useState("");
   const [txt, setTxt] = useState("");
+  const [limit,setLimit] = useState(false);
   const { id } = useParams();
   console.log("id", id);
   const handleTextArea = (e) => {
@@ -27,6 +28,21 @@ function UpdateArticle() {
       
   //   }
   // }
+
+  const fetchState = async() => {
+    try {
+      const res = await fetch('/api/articles/protected');
+      const state = await res.json();
+      setTimeout(() => {
+        setLimit(true);
+      }, 60000);
+      if(state.user === "invalid") {
+        window.location.href = '/';
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(() => {
     const fetchTitle = async () => {
       try {
@@ -39,7 +55,8 @@ function UpdateArticle() {
       }
     };
     fetchTitle();
-  }, []);
+    fetchState();
+  }, [limit]);
   return (
     <>
       <section className="container-fluid">
