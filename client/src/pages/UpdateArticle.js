@@ -6,6 +6,7 @@ function UpdateArticle() {
   const [inp, setInp] = useState("");
   const [txt, setTxt] = useState("");
   const [limit,setLimit] = useState(false);
+  
   const { id } = useParams();
   console.log("id", id);
   const handleTextArea = (e) => {
@@ -28,32 +29,46 @@ function UpdateArticle() {
       
   //   }
   // }
-
-  const fetchState = async() => {
-    try {
-      const res = await fetch('/api/articles/protected');
-      const state = await res.json();
-      setTimeout(() => {
-        setLimit(true);
-      }, 60000);
-      if(state.user === "invalid") {
-        window.location.href = '/';
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  
+  
   useEffect(() => {
+    
+    
     const fetchTitle = async () => {
       try {
         const response = await fetch(`/api/articles/update/article/${id}`);
         const articleData = await response.json();
         console.log(articleData);
+        
+        
         setInp(articleData.data.title);
+       
       } catch (error) {
         console.log(error);
       }
     };
+    const fetchState = async() => {
+      try {
+        const res = await fetch('/api/articles/protected');
+        const state = await res.json();
+        let timeLimitInMs;
+        let currentTime = Date.now();
+        console.log('currentTimestate', currentTime);
+        if(currentTime <= state.limit) {
+          timeLimitInMs = state.limit - currentTime;
+        }
+        setTimeout(() => {
+          console.log('Timeout');
+          setLimit(true);
+        }, 60000);
+        if(state.user === "invalid") {
+          console.log('currentTimeInvalid', currentTime);
+          // window.location.href = '/';
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     fetchTitle();
     fetchState();
   }, [limit]);

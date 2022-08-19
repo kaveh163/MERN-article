@@ -6,30 +6,39 @@ import ListUsersArticles from '../ListUsersArticles'
 const Articles = () => {
   const [data, setData] = useState(null);
   const [limit, setLimit] = useState(false);
-  console.log('after setstate');
+  console.log('after state');
   useEffect(() => {
-    console.log('beggining of useeffect');
+    
     const fetchUserArticles = async () => {
+      console.log('inside fetch function')
       try {
         const response = await fetch("/api/articles/user");
         const data = await response.json();
         console.log(data);
+        let timeLimitInMs;
+        let currentTime;
+        
         if(data.data) {
           setData(data.data);
-          console.log('after setData');
+          console.log('setData');
+          
+          currentTime= Date.now();
         }
-        console.log('before setTimeout');
+        
+        if(currentTime <= data.limit) {
+          timeLimitInMs = data.limit - currentTime;
+        }
         setTimeout(() => {
           setLimit(true);
           console.log('after limit');
-        }, 60000);
-        console.log('after setTimeout');
+        }, timeLimitInMs);
+        
         if (data.user === "invalid") {
           console.log('inside invalid');
           
           window.location.href = "/";
         }
-       console.log('last statement in try');
+       
       } catch (error) {
         console.log(error);
       }

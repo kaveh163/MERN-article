@@ -11,10 +11,15 @@ const Article = () => {
     try {
       const response = await fetch('/api/articles/protected');
       const state = await response.json();
+      let timeLimitInMs;
+      let currentTime = Date.now();
+      if(currentTime <= state.limit) {
+        timeLimitInMs = state.limit - currentTime;
+      }
       setTimeout(() => {
         setLimit(true);
         console.log('after limit');
-      }, 60000)
+      }, timeLimitInMs)
       if(state.user === "invalid") {
         window.location.href = '/';
       }

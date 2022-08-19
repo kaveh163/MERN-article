@@ -5,9 +5,13 @@ const PORT = process.env.PORT || 3001;
 const passport = require('passport');
 
 const connectDB = require("./config/db");
-const articles = require("./routes/articles");
-const users = require("./routes/users");
+
 const app = express();
+// app.locals.limit = '';
+const articles = require("./routes/articles")(app);
+const users = require("./routes/users")(app);
+
+
 
 // Parsing middlewares
 app.use(express.json());
