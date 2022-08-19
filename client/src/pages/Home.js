@@ -1,3 +1,4 @@
+import { faPersonWalkingDashedLineArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "../home.module.css";
@@ -7,6 +8,7 @@ const Home = () => {
   const [flash, setFlash] = useState(false);
   const [data, setData] = useState(null);
   const [show, setShow] = useState(false);
+  const [limit, setLimit] = useState(false);
 
   useEffect(() => {
     if (document.location.search) {
@@ -30,19 +32,44 @@ const Home = () => {
         const data = await response.json();
         console.log("fetchData", data);
         setData(data);
+        console.log('setData');
       } catch (error) {
         console.log("error occured");
       }
     };
     articles();
+    console.log('after articles method');
     console.log(document.location.search);
     if (document.location.search) {
       const query = new URLSearchParams(document.location.search);
 
       const success = query.get("success");
-
+      console.log('before success')
       if (success === "true") {
         setShow(true);
+        console.log('after setShow')
+        const fetchState = async () => {
+          const resp = await fetch('/api/articles/protected');
+          const state = await resp.json();
+          const currentTime = Date.now();
+          let timeLimitInMs;
+          if(currentTime <= state.limit) {
+            timeLimitInMs = state.limit - currentTime;
+          };
+          console.log('before timeout');
+          setTimeout(() => {
+            console.log('in timeout');
+            setLimit(true);
+          }, timeLimitInMs);
+          console.log('before invalid')
+          if(state.user === "invalid") {
+            console.log('in invalid');
+            window.location.href = '/';
+          }
+        }
+        console.log('after success');
+        fetchState();
+        console.log('after fetch');
       }
     }
   }, []);

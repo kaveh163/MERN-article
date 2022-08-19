@@ -39,38 +39,32 @@ function UpdateArticle() {
         const response = await fetch(`/api/articles/update/article/${id}`);
         const articleData = await response.json();
         console.log(articleData);
-        
-        
         setInp(articleData.data.title);
+        // const res = await fetch('/api/articles/protected');
+        // const state = await res.json();
+        let timeLimitInMs;
+        let currentTime = Date.now();
+        console.log('currentTimestate', currentTime);
+        if(currentTime <= articleData.limit) {
+          timeLimitInMs = articleData.limit - currentTime;
+        }
+        setTimeout(() => {
+          console.log('Timeout');
+          window.location.href = '/';
+          // setLimit(true);
+        }, timeLimitInMs);
+        // if(articleData.user === "invalid") {
+        //   console.log('currentTimeInvalid', currentTime);
+        //   window.location.href = '/';
+        // }
        
       } catch (error) {
         console.log(error);
       }
     };
-    const fetchState = async() => {
-      try {
-        const res = await fetch('/api/articles/protected');
-        const state = await res.json();
-        let timeLimitInMs;
-        let currentTime = Date.now();
-        console.log('currentTimestate', currentTime);
-        if(currentTime <= state.limit) {
-          timeLimitInMs = state.limit - currentTime;
-        }
-        setTimeout(() => {
-          console.log('Timeout');
-          setLimit(true);
-        }, 60000);
-        if(state.user === "invalid") {
-          console.log('currentTimeInvalid', currentTime);
-          // window.location.href = '/';
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+   
     fetchTitle();
-    fetchState();
+    
   }, [limit]);
   return (
     <>

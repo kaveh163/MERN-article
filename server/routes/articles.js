@@ -8,7 +8,7 @@ module.exports = function (app) {
   // router.get("/", function (req, res) {
   //     res.send('article routes working');
   // });
-  
+
   router.get("/protected", function (req, res, next) {
     passport.authenticate(
       "jwt",
@@ -18,7 +18,7 @@ module.exports = function (app) {
         if (!user) {
           return res.json({ user: "invalid" });
         }
-        console.log('app.locals.limit.article/protected',app.locals.limit);
+        console.log("app.locals.limit.article/protected", app.locals.limit);
         res.json({ data: "valid", limit: app.locals.limit });
       }
     )(req, res, next);
@@ -50,14 +50,13 @@ module.exports = function (app) {
         console.log("id", _id);
         const usersArticles = await Article.find({ user: _id });
         // console.log("usersArticles", usersArticles);
-        console.log('app.locals.limit.article/user',app.locals.limit);
+        console.log("app.locals.limit.article/user", app.locals.limit);
         res.json({ data: usersArticles, limit: app.locals.limit });
       }
     )(req, res, next);
   });
 
   router.get("/list", async function (req, res) {
-    
     try {
       const articles = await Article.find({}).populate("user");
       console.log("Successfully Fetched all the Articles 👍");
@@ -128,23 +127,51 @@ module.exports = function (app) {
 
     res.json({ data: article });
   });
-  router.get(
-    "/update/article/:id",
-    passport.authenticate("jwt", { session: false }),
-    async function (req, res) {
-      console.log("updatedId", req.params.id);
-      const id = req.params.id;
-      let article;
-      try {
-        article = await Article.findById(id).exec();
-        console.log("updatedArticle", article);
-      } catch (error) {
-        console.log("Error Occured");
-        process.exit(1);
+
+  // router.get(
+  //   ,
+  //   passport.authenticate("jwt", { session: false }),
+  //   async function (req, res) {
+  //     console.log("updatedId", req.params.id);
+  //     const id = req.params.id;
+  //     let article;
+  //     try {
+  //       article = await Article.findById(id).exec();
+  //       console.log("updatedArticle", article);
+  //     } catch (error) {
+  //       console.log("Error Occured");
+  //       process.exit(1);
+  //     }
+  //     res.json({ data: article });
+  //   }
+  // );
+
+  router.get("/update/article/:id", function (req, res, next) {
+    passport.authenticate(
+      "jwt",
+      { session: false },
+      async function (err, user, info) {
+        if (err) return next(err);
+        if (!user) {
+          return res.json({ user: "invalid" });
+        }
+        console.log("updatedId", req.params.id);
+        const id = req.params.id;
+        let article;
+        try {
+          article = await Article.findById(id).exec();
+          console.log("updatedArticle", article);
+        } catch (error) {
+          console.log("Error Occured");
+          process.exit(1);
+        }
+        console.log("article Bug", article);
+        console.log("app.locals.limit.article/updateId", app.locals.limit);
+        res.json({ data: article, limit: app.locals.limit });
       }
-      res.json({ data: article });
-    }
-  );
+    )(req, res, next);
+  });
+
   router.post(
     "/update/article/:id",
     passport.authenticate("jwt", { session: false }),
@@ -163,6 +190,9 @@ module.exports = function (app) {
       res.redirect("/?success=true");
     }
   );
+
+  
+
   router.delete(
     "/article/delete/:id",
     passport.authenticate("jwt", { session: false }),
