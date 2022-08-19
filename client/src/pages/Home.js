@@ -9,7 +9,7 @@ const Home = () => {
   const [data, setData] = useState(null);
   const [show, setShow] = useState(false);
   const [limit, setLimit] = useState(false);
-
+  console.log('after state')
   useEffect(() => {
     if (document.location.search) {
       const query = new URLSearchParams(document.location.search);
@@ -48,27 +48,9 @@ const Home = () => {
       if (success === "true") {
         setShow(true);
         console.log('after setShow')
-        const fetchState = async () => {
-          const resp = await fetch('/api/articles/protected');
-          const state = await resp.json();
-          const currentTime = Date.now();
-          let timeLimitInMs;
-          if(currentTime <= state.limit) {
-            timeLimitInMs = state.limit - currentTime;
-          };
-          console.log('before timeout');
-          setTimeout(() => {
-            console.log('in timeout');
-            setLimit(true);
-          }, timeLimitInMs);
-          console.log('before invalid')
-          if(state.user === "invalid") {
-            console.log('in invalid');
-            window.location.href = '/';
-          }
-        }
+        
         console.log('after success');
-        fetchState();
+       
         console.log('after fetch');
       }
     }
