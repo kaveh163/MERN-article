@@ -4,8 +4,8 @@ import styles from './listBody.module.css'
 
 function ListBody({value}) {
     const [limit, setLimit] = useState(null);
-    console.log('value', value);
-    console.log(value.split('.'))
+    // console.log('value', value);
+    // console.log(value.split('.'))
     let subString = value.substring(0, 400);
     let subStringCopy = subString;
     // console.log('subString', subString);
@@ -20,10 +20,10 @@ function ListBody({value}) {
     useEffect(() => {
         const limitString = () => {
             const subStringArr = subString.split('.');
-            console.log('subStringArr', subStringArr);
+            // console.log('subStringArr', subStringArr);
             if(subStringArr.length == 1) {
                 const newString = subStringArr.join('.');
-                console.log('newString', newString);
+                // console.log('newString', newString);
                 if (newString.length < 200) {
                     const result = subStringCopy.substring(0, 201) + ('. . . ');
                     setLimit(result);
@@ -38,13 +38,13 @@ function ListBody({value}) {
                 return;
             } else {
                 const ArrLastItem = subStringArr[subStringArr.length - 1];
-                console.log('ArrLastItem', ArrLastItem);
+                // console.log('ArrLastItem', ArrLastItem);
                 const pattern = /^((\s[A-Z])|((\s)?(\r\n)+(\")?[A-Z]))/;
-                console.log('pattern Test', pattern.test(ArrLastItem));
+                // console.log('pattern Test', pattern.test(ArrLastItem));
                 if (!pattern.test(ArrLastItem)) {
                     subStringArr.pop();
                     subString = subStringArr.join('.');
-                    console.log('subString', subString);
+                    // console.log('subString', subString);
                     limitString();
                 } else {
                     
@@ -54,7 +54,7 @@ function ListBody({value}) {
                         setLimit(result);
                         return;
                     }
-                    console.log('result', result);
+                    // console.log('result', result);
                     result = result + '.';
                     setLimit(result);
                     return;

@@ -69,6 +69,32 @@ module.exports = function (app) {
       process.exit(1);
     }
   });
+
+  router.get("/list/protected", function (req, res, next) {
+    passport.authenticate(
+      "jwt",
+      { session: false },
+      async function (err, user, info) {
+        if (err) return next(err);
+        if (!user) {
+          return res.json({ user: "invalid" });
+        }
+        try {
+          const articles = await Article.find({}).populate("user");
+          console.log("Successfully Fetched all the Articles 👍");
+          // console.log(articles);
+          
+          res.json({ articles: articles, limit: app.locals.limit });
+        } catch (error) {
+          console.log(`${error} ❌`);
+          process.exit(1);
+        }
+      }
+    )(req, res, next);
+  });
+
+
+
   // router.post(
   //   "/protected",
   //   passport.authenticate("jwt", { session: false }),

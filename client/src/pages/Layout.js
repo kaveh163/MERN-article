@@ -17,13 +17,13 @@ function Layout() {
     }
   };
   useEffect(() => {
-    console.log(document.location.search);
+    // console.log(document.location.search);
     if (document.location.search) {
       const query = new URLSearchParams(document.location.search);
-      console.log("Here");
-      console.log("query", query);
+      // console.log("Here");
+      // console.log("query", query);
       const success = query.get("success");
-      console.log(success);
+      // console.log(success);
       if (success === "true") {
         setToggle(false);
         setShow(true);

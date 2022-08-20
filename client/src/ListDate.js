@@ -14,15 +14,15 @@ function ListDate({ date}) {
   const MinutesDiff = Math.floor(
     ((diffDate % dayInMs) % hourInMs) / minuteInMs
   );
-  console.log(
-    `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`
-  );
-  console.log(
-    `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`
-  );
-  console.log(HoursDiff);
-  console.log(DaysDiff);
-  console.log(MinutesDiff);
+  // console.log(
+  //   `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`
+  // );
+  // console.log(
+  //   `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`
+  // );
+  // console.log(HoursDiff);
+  // console.log(DaysDiff);
+  // console.log(MinutesDiff);
   let result;
   useEffect(() => {
     if (DaysDiff < 1) {
