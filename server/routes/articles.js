@@ -9,6 +9,13 @@ module.exports = function (app) {
   //     res.send('article routes working');
   // });
 
+  router.get(
+    "/expire",
+    passport.authenticate("jwt", { session: false }),
+    async function (req, res) {
+      res.json({exp: app.locals.time})
+    }
+  );
   router.get("/protected", function (req, res, next) {
     passport.authenticate(
       "jwt",

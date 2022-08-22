@@ -2,11 +2,39 @@ import { Link, Outlet } from "react-router-dom";
 import styles from "../layout.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 function Layout() {
   const [toggle, setToggle] = useState(true);
   const [show, setShow] = useState(false);
+  const [count, setCount] = useState(0);
+  const [isCount, setIsCount] = useState(true);
 
+  const time = useRef('');
+
+  const timer= () => {
+    console.log('timer', count);
+    setCount(count - 1000);
+  };
+  const fetchExp= async()=> {
+    try {
+      const res = await fetch('/api/articles/expire');
+      const exptime = await res.json();
+      console.log('exptime', exptime);
+      // setCount(exptime.exp);
+      // setCount(60000);
+      if(isCount) {
+        if(exptime.exp) {
+          setCount(exptime.exp);
+          setIsCount(false);
+        }
+      }
+      
+     time.current =  setInterval(timer, 1000);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const logoutHandler = async () => {
     const response = await fetch("/api/users/logout");
     const data = await response.json();
@@ -27,9 +55,12 @@ function Layout() {
       if (success === "true") {
         setToggle(false);
         setShow(true);
+        fetchExp();
+        return () => clearInterval(time.current)
       }
     }
-  }, []);
+    
+  }, [count]);
 
   return (
     <>
@@ -97,6 +128,7 @@ function Layout() {
             </div>
           </div>
         </nav>
+        {count}
         <Outlet />
       </div>
     </>
