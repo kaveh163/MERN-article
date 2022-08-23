@@ -6,35 +6,48 @@ import { useState, useEffect, useRef } from "react";
 function Layout() {
   const [toggle, setToggle] = useState(true);
   const [show, setShow] = useState(false);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(900000);
   const [isCount, setIsCount] = useState(true);
 
   const time = useRef('');
 
   const timer= () => {
-    console.log('timer', count);
+    
+      console.log('timer', count);
     setCount(count - 1000);
+    
+    
   };
-  const fetchExp= ()=> {
+  const fetchExp=  async()=> {
     try {
-      // const res = await fetch('/api/articles/expire');
-      // const exptime = await res.json();
+      // const currentDate = Date.now();
+      if(isCount) {
+      const res = await fetch('/api/articles/expire');
+      const exptime = await res.json();
+      // const expDate = Date.now() + exptime;
+      // console.log('timediff', expDate - currentDate);
       // console.log('exptime', exptime);
       // setCount(exptime.exp);
       // setCount(60000);
-      if(isCount) {
-        if(60000) {
-          setCount(60000);
+      // if(isCount) {
+        
+          setCount(exptime.exp);
           setIsCount(false);
-        }
+        
       }
-      if(count > 0) {
-        time.current =  setInterval(timer, 1000);
-      } else {
+      console.log('count', count);
+      // if(count > 2000) {
+      //   time.current =  setInterval(timer, 1000);
+      // } else {
        
+      //   window.location.href = '/';
+      // }
+      if(count > 0) {
+        time.current =  setInterval(timer, 1000)
+      } else {
         window.location.href = '/';
       }
-     
+      
 
     } catch (error) {
       console.log(error);
