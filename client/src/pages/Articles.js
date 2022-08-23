@@ -25,19 +25,19 @@ const Articles = () => {
           currentTime= Date.now();
         }
         
-        if(currentTime <= data.limit) {
-          timeLimitInMs = data.limit - currentTime;
-        }
-        setTimeout(() => {
-          setLimit(true);
-          console.log('after limit');
-        }, timeLimitInMs);
+        // if(currentTime <= data.limit) {
+        //   timeLimitInMs = data.limit - currentTime;
+        // }
+        // setTimeout(() => {
+        //   setLimit(true);
+        //   console.log('after limit');
+        // }, timeLimitInMs);
         
-        if (data.user === "invalid") {
-          console.log('inside invalid');
+        // if (data.user === "invalid") {
+        //   console.log('inside invalid');
           
-          window.location.href = "/";
-        }
+        //   window.location.href = "/";
+        // }
        
       } catch (error) {
         console.log(error);
@@ -45,7 +45,7 @@ const Articles = () => {
     };
     fetchUserArticles();
     console.log('after fetch function');
-  }, [limit]);
+  }, []);
   // console.log("Users Articles", data);
   console.log('return');
   return (

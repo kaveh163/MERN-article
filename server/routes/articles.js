@@ -25,8 +25,8 @@ module.exports = function (app) {
         if (!user) {
           return res.json({ user: "invalid" });
         }
-        console.log("app.locals.limit.article/protected", app.locals.limit);
-        res.json({ data: "valid", limit: app.locals.limit });
+        
+        res.json({ data: "valid" });
       }
     )(req, res, next);
   });
@@ -57,8 +57,8 @@ module.exports = function (app) {
         console.log("id", _id);
         const usersArticles = await Article.find({ user: _id });
         // console.log("usersArticles", usersArticles);
-        console.log("app.locals.limit.article/user", app.locals.limit);
-        res.json({ data: usersArticles, limit: app.locals.limit });
+        
+        res.json({ data: usersArticles });
       }
     )(req, res, next);
   });
@@ -91,7 +91,7 @@ module.exports = function (app) {
           console.log("Successfully Fetched all the Articles 👍");
           // console.log(articles);
           
-          res.json({ articles: articles, limit: app.locals.limit });
+          res.json({ articles: articles });
         } catch (error) {
           console.log(`${error} ❌`);
           process.exit(1);
@@ -199,8 +199,8 @@ module.exports = function (app) {
           process.exit(1);
         }
         console.log("article Bug", article);
-        console.log("app.locals.limit.article/updateId", app.locals.limit);
-        res.json({ data: article, limit: app.locals.limit });
+       
+        res.json({ data: article });
       }
     )(req, res, next);
   });

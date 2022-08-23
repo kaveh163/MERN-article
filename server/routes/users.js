@@ -9,7 +9,7 @@ const expirationtimeInMs = 60 * 1000;
 const secret = "jwt_secret_key";
 module.exports = function (app) {
   app.locals.limit = ''
-  app.locals.time = ''
+  app.locals.time = expirationtimeInMs;
   const router = express.Router();
   // router.get("/", function (req, res) {
   //   res.send("users routes working");
@@ -137,7 +137,7 @@ module.exports = function (app) {
           return res.json(info);
         }
         app.locals.limit = Date.now() + parseInt(expirationtimeInMs);
-        app.locals.time = parseInt(expirationtimeInMs);
+        // app.locals.time = parseInt(expirationtimeInMs);
         console.log('app.locals.limit', app.locals.limit);
         console.log("user", user);
         const { _id } = user;

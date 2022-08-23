@@ -13,16 +13,16 @@ const Article = () => {
       const state = await response.json();
       let timeLimitInMs;
       let currentTime = Date.now();
-      if(currentTime <= state.limit) {
-        timeLimitInMs = state.limit - currentTime;
-      }
-      setTimeout(() => {
-        setLimit(true);
-        console.log('after limit');
-      }, timeLimitInMs)
-      if(state.user === "invalid") {
-        window.location.href = '/';
-      }
+      // if(currentTime <= state.limit) {
+      //   timeLimitInMs = state.limit - currentTime;
+      // }
+      // setTimeout(() => {
+      //   setLimit(true);
+      //   console.log('after limit');
+      // }, timeLimitInMs)
+      // if(state.user === "invalid") {
+      //   window.location.href = '/';
+      // }
       console.log('last try statement');
     } catch (error) {
       console.log(error);
@@ -31,7 +31,7 @@ const Article = () => {
   }
   useEffect(() => {
     fetchState();
-  }, [limit])
+  }, [])
   return (
     <>
       <section className="container-fluid">

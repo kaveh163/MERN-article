@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react";
 function Layout() {
   const [toggle, setToggle] = useState(true);
   const [show, setShow] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [isCount, setIsCount] = useState(true);
 
   const time = useRef('');
@@ -15,21 +15,26 @@ function Layout() {
     console.log('timer', count);
     setCount(count - 1000);
   };
-  const fetchExp= async()=> {
+  const fetchExp= ()=> {
     try {
-      const res = await fetch('/api/articles/expire');
-      const exptime = await res.json();
-      console.log('exptime', exptime);
+      // const res = await fetch('/api/articles/expire');
+      // const exptime = await res.json();
+      // console.log('exptime', exptime);
       // setCount(exptime.exp);
       // setCount(60000);
       if(isCount) {
-        if(exptime.exp) {
-          setCount(exptime.exp);
+        if(60000) {
+          setCount(60000);
           setIsCount(false);
         }
       }
-      
-     time.current =  setInterval(timer, 1000);
+      if(count > 0) {
+        time.current =  setInterval(timer, 1000);
+      } else {
+       
+        window.location.href = '/';
+      }
+     
 
     } catch (error) {
       console.log(error);
@@ -45,6 +50,7 @@ function Layout() {
     }
   };
   useEffect(() => {
+    
     // console.log(document.location.search);
     if (document.location.search) {
       const query = new URLSearchParams(document.location.search);
@@ -128,7 +134,7 @@ function Layout() {
             </div>
           </div>
         </nav>
-        {count}
+        {show && count}
         <Outlet />
       </div>
     </>

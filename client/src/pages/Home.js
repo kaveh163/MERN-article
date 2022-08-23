@@ -33,15 +33,15 @@ const Home = () => {
             setData(data);
             let currentTime = Date.now();
             let timeLimitInMs;
-            if (currentTime <= data.limit) {
-              timeLimitInMs = data.limit - currentTime;
-            }
-            setTimeout(()=> {
-              setLimit(true);
-            }, timeLimitInMs);
-            if(data.user === "invalid") {
-              window.location.href = '/';
-            }
+            // if (currentTime <= data.limit) {
+            //   timeLimitInMs = data.limit - currentTime;
+            // }
+            // setTimeout(()=> {
+            //   setLimit(true);
+            // }, timeLimitInMs);
+            // if(data.user === "invalid") {
+            //   window.location.href = '/';
+            // }
           } catch (error) {
             console.log(error);
           }
@@ -95,7 +95,7 @@ const Home = () => {
     //     console.log("after fetch");
     //   }
     // }
-  }, [limit]);
+  }, []);
   const handleCards = () => {
     // const currentDate = new Date();
 

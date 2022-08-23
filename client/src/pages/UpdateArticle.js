@@ -45,14 +45,14 @@ function UpdateArticle() {
         let timeLimitInMs;
         let currentTime = Date.now();
         console.log('currentTimestate', currentTime);
-        if(currentTime <= articleData.limit) {
-          timeLimitInMs = articleData.limit - currentTime;
-        }
-        setTimeout(() => {
-          console.log('Timeout');
-          window.location.href = '/';
+        // if(currentTime <= articleData.limit) {
+        //   timeLimitInMs = articleData.limit - currentTime;
+        // }
+        // setTimeout(() => {
+        //   console.log('Timeout');
+        //   window.location.href = '/';
           // setLimit(true);
-        }, timeLimitInMs);
+        // }, timeLimitInMs);
         // if(articleData.user === "invalid") {
         //   console.log('currentTimeInvalid', currentTime);
         //   window.location.href = '/';
@@ -65,7 +65,7 @@ function UpdateArticle() {
    
     fetchTitle();
     
-  }, [limit]);
+  }, []);
   return (
     <>
       <section className="container-fluid">
