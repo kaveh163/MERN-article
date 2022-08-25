@@ -80,7 +80,25 @@ function Layout() {
     }
     
   }, [count]);
-
+  const handleTime = (count) => {
+    let milliseconds = count;
+    let oneMinuteToMilliSeconds = 60000;
+    let oneHourToMilliSeconds = oneMinuteToMilliSeconds * 60;
+    let hours = Math.floor(milliseconds / oneHourToMilliSeconds);
+    let minutes = Math.floor((milliseconds % oneHourToMilliSeconds) / oneMinuteToMilliSeconds);
+    let seconds = Math.floor(((milliseconds % oneHourToMilliSeconds) % oneMinuteToMilliSeconds) / 1000);
+    if(hours < 10) {
+      hours = `0${hours}`
+    }
+    if(minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+    if(seconds < 10) {
+      seconds = `0${seconds}`
+    }
+    return `${hours}:${minutes}:${seconds}`;
+    
+  }
   return (
     <>
       <div className={`${styles.align}`}>
@@ -147,7 +165,10 @@ function Layout() {
             </div>
           </div>
         </nav>
-        {show && count}
+        <div className='container-fluid'>
+        {show && handleTime(count)}
+        </div>
+        
         <Outlet />
       </div>
     </>
