@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from '../articles.module.css';
 import ListUsersArticles from '../ListUsersArticles'
 
-
+console.log('inside articles');
 const Articles = () => {
   const [data, setData] = useState(null);
   const [limit, setLimit] = useState(false);

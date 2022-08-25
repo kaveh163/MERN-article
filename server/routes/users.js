@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const passport = require("passport");
 
-const expirationtimeInMs = 60 * 1000;
+const expirationtimeInMs = 60 * 1000 * 60;
 const secret = "jwt_secret_key";
 module.exports = function (app) {
   app.locals.limit = ''

@@ -78,5 +78,8 @@ nav.font {
         padding-left: 0;
         padding-right: 0;
     }
+    .alignLayout {
+        text-align: center;
+    }
    
 }

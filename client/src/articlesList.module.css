@@ -37,6 +37,7 @@
     font-size:16px;
     font-family: inherit;
     line-height: 1.8rem;
+    height: auto;
 }
 @media only screen and (max-width: 576px){
     .header {
@@ -48,6 +49,7 @@
     .article {
         line-height: 1.2rem;
         font-size: 12px;
+        height: auto;
     }
     .articleParent {
         height: 12rem;

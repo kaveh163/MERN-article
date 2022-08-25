@@ -165,7 +165,7 @@ function Layout() {
             </div>
           </div>
         </nav>
-        <div className='container-fluid'>
+        <div className={`container-fluid ${styles.alignLayout}`}>
         {show && handleTime(count)}
         </div>
         

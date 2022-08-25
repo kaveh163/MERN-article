@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import styles from "../articlesList.module.css";
 import TimeStamp from "../TimeStamp";
 import { useLocation } from "react-router-dom";
-
+console.log('inside ArticlesList');
 function ArticlesList(props) {
   const [data, setData] = useState("");
   const [shadow, setShadow] = useState(false);
@@ -13,13 +13,28 @@ function ArticlesList(props) {
   const { id } = useParams();
   console.log("afterState");
   // const location = useLocation();
-  const articleParent = useRef();
-  const articleChild = useRef();
+  const articleParent = useRef('');
+  const articleChild = useRef('');
   // const currentDate = location.state.currentDate;
   // console.log(id);
 
   useEffect(() => {
-    console.log("inside effect at beginning");
+    const handleWidth = (x) => {
+      if(x.matches) {
+        console.log('articleChild',articleChild)
+        // console.log('clientHeight', articleChild.current.clientHeight)
+        if (articleChild.current.clientHeight &&
+          articleChild.current.clientHeight > articleParent.current.clientHeight
+        ) {
+          setShadow(true);
+        } else {
+          // setShadow(false);
+          articleChild.current.height = 'auto';
+
+        }
+      }
+    }
+    // console.log("inside effect at beginning");
     const fetchArticle = async () => {
       try {
         const response = await fetch("/api/articles/article", {
@@ -33,9 +48,9 @@ function ArticlesList(props) {
         });
         const data = await response.json();
         // console.log(data);
-        console.log("before setData");
+        // console.log("before setData");
         setData(data.data);
-        console.log("after setData");
+        // console.log("after setData");
       } catch (error) {
         console.log(error);
       }
@@ -43,15 +58,14 @@ function ArticlesList(props) {
     if (data.length === 0) {
       fetchArticle();
     }
-    if (
-      articleChild.current.clientHeight > articleParent.current.clientHeight
-    ) {
-      setShadow(true);
-    } else {
-      setShadow(false);
-    }
-    console.log("inside effect after fetchArticle");
-  }, [data]);
+    const pageWidth = window.matchMedia("(max-width: 577px)");
+    handleWidth(pageWidth);
+    pageWidth.addListener(handleWidth);
+    
+    return () => pageWidth.removeListener(handleWidth);
+    
+    // console.log("inside effect after fetchArticle");
+  }, [data, articleChild]);
 
   // console.log(data);
   console.log("before return");
