@@ -46,7 +46,7 @@ function Layout() {
       console.log(data.error);
     }
   };
-  if (performance.navigation.type == 1) {
+  if (performance.getEntriesByType("navigation")[0].type == "reload") {
     logoutHandler();
   }
   useEffect(() => {
