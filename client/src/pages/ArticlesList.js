@@ -60,9 +60,9 @@ function ArticlesList(props) {
     }
     const pageWidth = window.matchMedia("(max-width: 577px)");
     handleWidth(pageWidth);
-    pageWidth.addListener(handleWidth);
+    pageWidth.addEventListener('change',handleWidth);
     
-    return () => pageWidth.removeListener(handleWidth);
+    return () => pageWidth.removeEventListener('change', handleWidth);
     
     // console.log("inside effect after fetchArticle");
   }, [data, articleChild]);
