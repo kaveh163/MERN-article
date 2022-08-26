@@ -2,11 +2,13 @@ import styles from "../updateArticle.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 
+console.log('inside UpdateArticle');
 function UpdateArticle() {
   const [inp, setInp] = useState("");
   const [txt, setTxt] = useState("");
   const [limit,setLimit] = useState(false);
-  
+  const [isExpired, setIsExpired] = useState(null);
+  const [showForm, setShowForm] = useState(true);
   const { id } = useParams();
   console.log("id", id);
   const handleTextArea = (e) => {
@@ -57,7 +59,11 @@ function UpdateArticle() {
         //   console.log('currentTimeInvalid', currentTime);
         //   window.location.href = '/';
         // }
-       
+       if(articleData.user === "invalid") {
+        window.location.href = '/';
+        // setIsExpired(true);
+        // setShowForm(null);
+       }
       } catch (error) {
         console.log(error);
       }
@@ -69,6 +75,8 @@ function UpdateArticle() {
   return (
     <>
       <section className="container-fluid">
+      {isExpired && <h4 style={{color: "red", textAlign: "center"}}>Unauthorized</h4> }
+      { showForm && 
         <section className="row m-0 p-0 mt-5">
           <section className={`col-12 col-md-6 offset-md-3 ${styles.grid}`}>
             <div className={`${styles.body}`}>
@@ -122,6 +130,7 @@ function UpdateArticle() {
             </div>
           </section>
         </section>
+}
       </section>
     </>
   );

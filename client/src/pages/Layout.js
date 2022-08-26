@@ -3,56 +3,40 @@ import styles from "../layout.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
+
+console.log('inside layout');
 function Layout() {
   const [toggle, setToggle] = useState(true);
   const [show, setShow] = useState(false);
-  const [count, setCount] = useState(900000);
+  const [count, setCount] = useState('');
   const [isCount, setIsCount] = useState(true);
 
-  const time = useRef('');
-
-  const timer= () => {
-    
-      console.log('timer', count);
-    setCount(count - 1000);
-    
-    
+  const time = useRef("");
+  
+  const timer = () => {
+    console.log("timer", count);
+    if (count > 0) {
+      setCount(count - 1000);
+    } else {
+      window.location.href = "/";
+    }
   };
-  const fetchExp=  async()=> {
+  const fetchExp = async () => {
     try {
-      // const currentDate = Date.now();
-      if(isCount) {
-      const res = await fetch('/api/articles/expire');
-      const exptime = await res.json();
-      // const expDate = Date.now() + exptime;
-      // console.log('timediff', expDate - currentDate);
-      // console.log('exptime', exptime);
-      // setCount(exptime.exp);
-      // setCount(60000);
-      // if(isCount) {
-        
-          setCount(exptime.exp);
-          setIsCount(false);
-        
-      }
-      console.log('count', count);
-      // if(count > 2000) {
-      //   time.current =  setInterval(timer, 1000);
-      // } else {
-       
-      //   window.location.href = '/';
-      // }
-      if(count > 0) {
-        time.current =  setInterval(timer, 1000)
-      } else {
-        window.location.href = '/';
-      }
-      
+      if (isCount) {
+        const res = await fetch("/api/articles/expire");
+        const exptime = await res.json();
 
+        setCount(exptime.exp);
+        setIsCount(false);
+      }
+      console.log("count", count);
+
+      time.current = setInterval(timer, 1000);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const logoutHandler = async () => {
     const response = await fetch("/api/users/logout");
     const data = await response.json();
@@ -62,8 +46,10 @@ function Layout() {
       console.log(data.error);
     }
   };
+  if (performance.navigation.type == 1) {
+    logoutHandler();
+  }
   useEffect(() => {
-    
     // console.log(document.location.search);
     if (document.location.search) {
       const query = new URLSearchParams(document.location.search);
@@ -75,30 +61,32 @@ function Layout() {
         setToggle(false);
         setShow(true);
         fetchExp();
-        return () => clearInterval(time.current)
+        return () => clearInterval(time.current);
       }
     }
-    
   }, [count]);
   const handleTime = (count) => {
     let milliseconds = count;
     let oneMinuteToMilliSeconds = 60000;
     let oneHourToMilliSeconds = oneMinuteToMilliSeconds * 60;
     let hours = Math.floor(milliseconds / oneHourToMilliSeconds);
-    let minutes = Math.floor((milliseconds % oneHourToMilliSeconds) / oneMinuteToMilliSeconds);
-    let seconds = Math.floor(((milliseconds % oneHourToMilliSeconds) % oneMinuteToMilliSeconds) / 1000);
-    if(hours < 10) {
-      hours = `0${hours}`
+    let minutes = Math.floor(
+      (milliseconds % oneHourToMilliSeconds) / oneMinuteToMilliSeconds
+    );
+    let seconds = Math.floor(
+      ((milliseconds % oneHourToMilliSeconds) % oneMinuteToMilliSeconds) / 1000
+    );
+    if (hours < 10) {
+      hours = `0${hours}`;
     }
-    if(minutes < 10) {
+    if (minutes < 10) {
       minutes = `0${minutes}`;
     }
-    if(seconds < 10) {
-      seconds = `0${seconds}`
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
     }
     return `${hours}:${minutes}:${seconds}`;
-    
-  }
+  };
   return (
     <>
       <div className={`${styles.align}`}>
@@ -166,9 +154,9 @@ function Layout() {
           </div>
         </nav>
         <div className={`container-fluid ${styles.alignLayout}`}>
-        {show && handleTime(count)}
+          {show && handleTime(count)}
         </div>
-        
+
         <Outlet />
       </div>
     </>

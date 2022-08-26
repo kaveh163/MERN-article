@@ -6,6 +6,7 @@ console.log('inside articles');
 const Articles = () => {
   const [data, setData] = useState(null);
   const [limit, setLimit] = useState(false);
+  const [isExpired, setIsExpired] = useState(null);
   console.log('after state');
   useEffect(() => {
     
@@ -23,6 +24,9 @@ const Articles = () => {
           console.log('setData');
           
           currentTime= Date.now();
+        }
+        if(data.user === "invalid") {
+          setIsExpired(true);
         }
         
         // if(currentTime <= data.limit) {
@@ -51,6 +55,7 @@ const Articles = () => {
   return (
     <>
       <section className="container-fluid">
+      {isExpired && <h4 style={{color: "red", textAlign: "center"}}>Unauthorized</h4> }
         <section className={`list-group list-group-flush m-5 ${styles.listWrap}`}>
           {data && <ListUsersArticles articleData= {data}/>}
           

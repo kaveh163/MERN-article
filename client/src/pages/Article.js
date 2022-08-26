@@ -3,6 +3,8 @@ import styles from "../article.module.css";
 
 const Article = () => {
   const [limit, setLimit] = useState(false);
+  const [isExpired, setIsExpired] = useState(null);
+  const [showForm, setShowForm] = useState(true);
   // const textareaElement = useRef();
   const handleTextarea = (event) => {
     event.target.style.height = event.target.scrollHeight + "px";
@@ -23,6 +25,10 @@ const Article = () => {
       // if(state.user === "invalid") {
       //   window.location.href = '/';
       // }
+      if(state.user === 'invalid') {
+        setIsExpired(true);
+        setShowForm(false);
+      }
       console.log('last try statement');
     } catch (error) {
       console.log(error);
@@ -35,6 +41,8 @@ const Article = () => {
   return (
     <>
       <section className="container-fluid">
+        {isExpired && <h4 style={{color: "red", textAlign: "center"}}>Unauthorized</h4> }
+        { showForm && 
         <div className={`${styles.layout}`}>
           <div className={`${styles.article}`}>Add Your Article</div>
           <div className={`row m-0 p-0 ${styles.lyt}`}>
@@ -81,6 +89,7 @@ const Article = () => {
             </div>
           </div>
         </div>
+}
       </section>
     </>
   );
