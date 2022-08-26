@@ -12,7 +12,7 @@ module.exports = function (app) {
   router.get(
     "/expire",
     passport.authenticate("jwt", { session: false }),
-    async function (req, res) {
+    function (req, res) {
       res.json({exp: app.locals.time})
     }
   );

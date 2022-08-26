@@ -41,7 +41,10 @@ function UpdateArticle() {
         const response = await fetch(`/api/articles/update/article/${id}`);
         const articleData = await response.json();
         console.log(articleData);
-        setInp(articleData.data.title);
+        if(articleData.data) {
+          setInp(articleData.data.title);
+        }
+        
         // const res = await fetch('/api/articles/protected');
         // const state = await res.json();
         let timeLimitInMs;
@@ -60,9 +63,9 @@ function UpdateArticle() {
         //   window.location.href = '/';
         // }
        if(articleData.user === "invalid") {
-        window.location.href = '/';
-        // setIsExpired(true);
-        // setShowForm(null);
+        // window.location.href = '/';
+        setIsExpired(true);
+        setShowForm(null);
        }
       } catch (error) {
         console.log(error);
