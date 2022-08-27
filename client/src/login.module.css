@@ -24,6 +24,7 @@
   height:auto;
   background-color: whitesmoke;
   border-radius: 20px;
+  width: 609.49px;
   /* text-align: center; */
 }
 
@@ -82,5 +83,6 @@ label {
     }
     .innerWrapper {
         z-index: 0;
+        width: 388px;
     }
 }

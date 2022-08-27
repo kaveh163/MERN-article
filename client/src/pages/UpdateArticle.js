@@ -12,7 +12,13 @@ function UpdateArticle() {
   const { id } = useParams();
   console.log("id", id);
   const handleTextArea = (e) => {
-    e.target.style.height = e.target.scrollHeight + "px";
+    if (e.target.value === "") {
+      e.target.style.height = "200px";
+    } else {
+      e.target.style.height = e.target.scrollHeight + "px";
+      console.log("height");
+    }
+    
     setTxt(e.target.value);
 
   };
