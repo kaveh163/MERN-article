@@ -23,7 +23,7 @@ module.exports = function (app) {
       async function (err, user, info) {
         if (err) return next(err);
         if (!user) {
-          return res.json({ user: "invalid" });
+          return res.status(401).json({ user: "invalid" });
         }
         
         res.json({ data: "valid" });
@@ -50,7 +50,7 @@ module.exports = function (app) {
       async function (err, user, info) {
         if (err) return next(err);
         if (!user) {
-          return res.json({ user: "invalid" });
+          return res.status(401).json({ user: "invalid" });
         }
         console.log(user);
         const { _id } = user;
@@ -186,7 +186,7 @@ module.exports = function (app) {
       async function (err, user, info) {
         if (err) return next(err);
         if (!user) {
-          return res.json({ user: "invalid" });
+          return res.status(401).json({ user: "invalid" });
         }
         console.log("updatedId", req.params.id);
         const id = req.params.id;
