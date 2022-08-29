@@ -8,7 +8,7 @@ const passport = require("passport");
 const expirationtimeInMs = 60 * 1000 * 60;
 const secret = "jwt_secret_key";
 module.exports = function (app) {
-  app.locals.limit = ''
+  app.locals.limit = "";
   app.locals.time = expirationtimeInMs;
   const router = express.Router();
   // router.get("/", function (req, res) {
@@ -126,8 +126,7 @@ module.exports = function (app) {
     }
   );
   router.post("/login", function (req, res, next) {
-    
-    console.log('app.locals.limit', app.locals.limit);
+    console.log("app.locals.limit", app.locals.limit);
     passport.authenticate(
       "local",
       { session: false },
@@ -138,7 +137,7 @@ module.exports = function (app) {
         }
         app.locals.limit = Date.now() + parseInt(expirationtimeInMs);
         // app.locals.time = parseInt(expirationtimeInMs);
-        console.log('app.locals.limit', app.locals.limit);
+        console.log("app.locals.limit", app.locals.limit);
         console.log("user", user);
         const { _id } = user;
         console.log(_id);
@@ -147,12 +146,22 @@ module.exports = function (app) {
           expiration: app.locals.limit,
         };
         const token = jwt.sign(payload, secret);
-        res
-          .cookie("jwt", token, {
-            httpOnly: true,
-            secure: false,
-          })
-          .json({ success: true });
+        if (process.env.NODE_ENV === "production") {
+          return res
+            .cookie("jwt", token, {
+              httpOnly: true,
+              secure: true,
+              sameSite: "strict",
+            })
+            .json({ success: true });
+        } else {
+          return res
+            .cookie("jwt", token, {
+              httpOnly: true,
+              secure: false,
+            })
+            .json({ success: true });
+        }
       }
     )(req, res, next);
   });
