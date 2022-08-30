@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 
-function TimeStamp({ createdDate, updatedDate}) {
-  console.log(createdDate);
-  console.log(updatedDate);
+function TimeStamp({ createdDate, updatedDate }) {
   const [update, setUpdate] = useState(null);
-  // const [create, setCreate] = useState(null);
+
   const currentDate = new Date();
   const updatedAt = new Date(updatedDate);
   const diffDate = currentDate - updatedAt;
@@ -16,15 +14,6 @@ function TimeStamp({ createdDate, updatedDate}) {
   const MinutesDiff = Math.floor(
     ((diffDate % dayInMs) % hourInMs) / minuteInMs
   );
-  console.log(
-    `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`
-  );
-  console.log(
-    `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`
-  );
-  console.log(HoursDiff);
-  console.log(DaysDiff);
-  console.log(MinutesDiff);
   let result;
   const createdAt = new Date(createdDate);
   const yearCreated = createdAt.getFullYear();
@@ -33,7 +22,6 @@ function TimeStamp({ createdDate, updatedDate}) {
   const timeCreated = createdAt.toLocaleTimeString();
 
   useEffect(() => {
-    
     if (DaysDiff < 1) {
       if (HoursDiff < 24 && HoursDiff > 1) {
         result = `${HoursDiff} Hours Ago`;
@@ -45,12 +33,10 @@ function TimeStamp({ createdDate, updatedDate}) {
         result = `${MinutesDiff} Minutes Ago`;
         setUpdate(result);
       } else if (MinutesDiff === 0) {
-        // result = `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`;
         result = "1 Minute Ago";
         setUpdate(result);
       }
     } else {
-      // result = `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`;
       result = `${updatedAt.toLocaleString("default", {
         month: "long",
       })} ${updatedAt.getDate()}`;

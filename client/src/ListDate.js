@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import styles from './listDate.module.css';
+import styles from "./listDate.module.css";
 
-function ListDate({ date}) {
+function ListDate({ date }) {
   const [time, setTime] = useState(null);
   const currentDate = new Date();
   const updatedAt = new Date(date);
@@ -14,15 +14,7 @@ function ListDate({ date}) {
   const MinutesDiff = Math.floor(
     ((diffDate % dayInMs) % hourInMs) / minuteInMs
   );
-  // console.log(
-  //   `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`
-  // );
-  // console.log(
-  //   `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`
-  // );
-  // console.log(HoursDiff);
-  // console.log(DaysDiff);
-  // console.log(MinutesDiff);
+
   let result;
   useEffect(() => {
     if (DaysDiff < 1) {
@@ -36,8 +28,7 @@ function ListDate({ date}) {
         result = `${MinutesDiff} Minutes Ago`;
         setTime(result);
       } else if (MinutesDiff <= 1) {
-        // result = `${updatedAt.toLocaleDateString()} ${updatedAt.toLocaleTimeString()}`;
-        result = "1 Minute Ago"
+        result = "1 Minute Ago";
         setTime(result);
       }
     } else {

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 function ListUsersArticles({ articleData }) {
   const navigate = useNavigate();
   const handleUpdate = (article) => {
-    console.log("handleupdateId", article._id);
     navigate(`/articles/update/${article._id}/?success=true`);
   };
 
@@ -16,8 +15,7 @@ function ListUsersArticles({ articleData }) {
         method: "DELETE",
       });
       const deleteMess = await response.text();
-      console.log(deleteMess);
-      window.location.href= '/articles/?success=true';
+      window.location.href = "/articles/?success=true";
       // navigate('/articles/?success=true');
     } catch (error) {
       console.log(error);

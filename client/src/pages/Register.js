@@ -32,7 +32,6 @@ const Register = () => {
     obj["pass"] = passwordElement.current.value;
     obj["cpass"] = cpasswordElement.current.value;
     obj["email"] = emailElement.current.value;
-    console.log("obj", obj);
 
     const createRegister = async () => {
       try {
@@ -44,14 +43,12 @@ const Register = () => {
           },
         });
         const data = await response.json();
-        console.log("data", data);
-        if(data.url === 'home') {
-          window.location.href= '/?display_flash=true';
+        if (data.url === "home") {
+          window.location.href = "/?display_flash=true";
         } else {
-          console.log(data.errors);
+          // console.log(data.errors);
           setError(data.errors);
         }
-        
       } catch (error) {
         console.log("Error posting data");
         process.exit(1);
@@ -84,7 +81,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "fname") {
-                            fnameElement.current.value = '';
+                            fnameElement.current.value = "";
                             return item.msg;
                           } else {
                             return "";
@@ -111,7 +108,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "lname") {
-                            lnameElement.current.value = '';
+                            lnameElement.current.value = "";
                             return item.msg;
                           } else {
                             return "";
@@ -144,7 +141,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "pass") {
-                            passwordElement.current.value = '';
+                            passwordElement.current.value = "";
                             return item.msg;
                           } else {
                             return "";
@@ -171,7 +168,7 @@ const Register = () => {
                     {error
                       ? error.map((item, index) => {
                           if (item.param === "cpass") {
-                            cpasswordElement.current.value = '';
+                            cpasswordElement.current.value = "";
                             return item.msg;
                           } else {
                             return "";
@@ -193,16 +190,18 @@ const Register = () => {
                     ref={emailElement}
                     required
                   />
-                  
+
                   <div className="invalid-feedback">
-                  {error? error.map((item, index) => {
-                      if(item.param === 'email') {
-                        emailElement.current.value = '';
-                        return item.msg;
-                      } else {
-                        return "";
-                      }
-                    }): ''}
+                    {error
+                      ? error.map((item, index) => {
+                          if (item.param === "email") {
+                            emailElement.current.value = "";
+                            return item.msg;
+                          } else {
+                            return "";
+                          }
+                        })
+                      : ""}
                   </div>
                 </div>
                 <div className="d-grid">

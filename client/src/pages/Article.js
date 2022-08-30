@@ -11,30 +11,16 @@ const Article = () => {
       event.target.style.height = "200px";
     } else {
       event.target.style.height = event.target.scrollHeight + "px";
-      console.log("height");
     }
   };
   const fetchState = async () => {
     try {
       const response = await fetch("/api/articles/protected");
       const state = await response.json();
-      let timeLimitInMs;
-      let currentTime = Date.now();
-      // if(currentTime <= state.limit) {
-      //   timeLimitInMs = state.limit - currentTime;
-      // }
-      // setTimeout(() => {
-      //   setLimit(true);
-      //   console.log('after limit');
-      // }, timeLimitInMs)
-      // if(state.user === "invalid") {
-      //   window.location.href = '/';
-      // }
       if (state.user === "invalid") {
         setIsExpired(true);
         setShowForm(false);
       }
-      console.log("last try statement");
     } catch (error) {
       console.log(error);
     }
@@ -108,5 +94,3 @@ const Article = () => {
   );
 };
 export default Article;
-
-//Woman says she fully co-operated with alleged sex assault investigation involving World Junior hockey players.....

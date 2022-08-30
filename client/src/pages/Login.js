@@ -2,6 +2,7 @@ import styles from "../login.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
+
 const Login = () => {
   const [errors, setErrors] = useState(null);
   const [auth, setAuth] = useState(null);
@@ -10,8 +11,6 @@ const Login = () => {
   const passwordElement = useRef();
   const handleLogin = (event) => {
     event.preventDefault();
-    console.log("email", emailElement.current.value);
-    console.log("password", passwordElement.current.value);
     const createLogin = async () => {
       try {
         const response = await fetch("/api/users/login", {
@@ -25,7 +24,6 @@ const Login = () => {
           },
         });
         const loginRes = await response.json();
-        console.log("LoginRes", loginRes);
         if (loginRes.errors) {
           setErrors(loginRes.errors);
         } else if (loginRes.message) {
@@ -36,8 +34,6 @@ const Login = () => {
         } else {
           window.location.href = `/?success=${true}`;
         }
-
-        
       } catch (error) {
         console.log(error);
         process.exit(1);
@@ -45,7 +41,6 @@ const Login = () => {
     };
     createLogin();
   };
-  console.log("data", errors);
   return (
     <>
       <section className="container-fluid">

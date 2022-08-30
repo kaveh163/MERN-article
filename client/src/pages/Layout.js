@@ -4,17 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
 
-console.log('inside layout');
 function Layout() {
   const [toggle, setToggle] = useState(true);
   const [show, setShow] = useState(false);
-  const [count, setCount] = useState('');
+  const [count, setCount] = useState("");
   const [isCount, setIsCount] = useState(true);
 
   const time = useRef("");
-  
+
   const timer = () => {
-    console.log("timer", count);
     if (count > 0) {
       setCount(count - 1000);
     } else {
@@ -30,7 +28,6 @@ function Layout() {
         setCount(exptime.exp);
         setIsCount(false);
       }
-      console.log("count", count);
 
       time.current = setInterval(timer, 1000);
     } catch (error) {
@@ -50,13 +47,9 @@ function Layout() {
     logoutHandler();
   }
   useEffect(() => {
-    // console.log(document.location.search);
     if (document.location.search) {
       const query = new URLSearchParams(document.location.search);
-      // console.log("Here");
-      // console.log("query", query);
       const success = query.get("success");
-      // console.log(success);
       if (success === "true") {
         setToggle(false);
         setShow(true);
@@ -118,14 +111,20 @@ function Layout() {
                 </li>
                 <li className="nav-item">
                   {show && (
-                    <Link className={`nav-link ${styles.menuChild}`} to="/article/?success=true">
+                    <Link
+                      className={`nav-link ${styles.menuChild}`}
+                      to="/article/?success=true"
+                    >
                       Add Article
                     </Link>
                   )}
                 </li>
                 <li className="nav-item">
                   {show && (
-                    <Link className={`nav-link ${styles.menuChild}`} to="/articles/?success=true">
+                    <Link
+                      className={`nav-link ${styles.menuChild}`}
+                      to="/articles/?success=true"
+                    >
                       Articles
                     </Link>
                   )}
@@ -134,7 +133,10 @@ function Layout() {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   {toggle && (
-                    <Link className={`nav-link ${styles.menuChild}`} to="/login">
+                    <Link
+                      className={`nav-link ${styles.menuChild}`}
+                      to="/login"
+                    >
                       Login
                     </Link>
                   )}

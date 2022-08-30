@@ -5,36 +5,32 @@ import { useParams } from "react-router";
 import styles from "../articlesList.module.css";
 import TimeStamp from "../TimeStamp";
 import { useLocation } from "react-router-dom";
-console.log('inside ArticlesList');
+
 function ArticlesList(props) {
   const [data, setData] = useState("");
   const [shadow, setShadow] = useState(false);
   const [txt, setTxt] = useState(false);
   const { id } = useParams();
-  console.log("afterState");
+
   // const location = useLocation();
-  const articleParent = useRef('');
-  const articleChild = useRef('');
+  const articleParent = useRef("");
+  const articleChild = useRef("");
   // const currentDate = location.state.currentDate;
-  // console.log(id);
 
   useEffect(() => {
     const handleWidth = (x) => {
-      if(x.matches) {
-        console.log('articleChild',articleChild)
-        // console.log('clientHeight', articleChild.current.clientHeight)
-        if (articleChild.current.clientHeight &&
+      if (x.matches) {
+        if (
+          articleChild.current.clientHeight &&
           articleChild.current.clientHeight > articleParent.current.clientHeight
         ) {
           setShadow(true);
         } else {
-          // setShadow(false);
-          articleChild.current.height = 'auto';
-
+          articleChild.current.height = "auto";
         }
       }
-    }
-    // console.log("inside effect at beginning");
+    };
+
     const fetchArticle = async () => {
       try {
         const response = await fetch("/api/articles/article", {
@@ -47,10 +43,7 @@ function ArticlesList(props) {
           },
         });
         const data = await response.json();
-        // console.log(data);
-        // console.log("before setData");
         setData(data.data);
-        // console.log("after setData");
       } catch (error) {
         console.log(error);
       }
@@ -60,15 +53,11 @@ function ArticlesList(props) {
     }
     const pageWidth = window.matchMedia("(max-width: 577px)");
     handleWidth(pageWidth);
-    pageWidth.addEventListener('change',handleWidth);
-    
-    return () => pageWidth.removeEventListener('change', handleWidth);
-    
-    // console.log("inside effect after fetchArticle");
+    pageWidth.addEventListener("change", handleWidth);
+
+    return () => pageWidth.removeEventListener("change", handleWidth);
   }, [data, articleChild]);
 
-  // console.log(data);
-  console.log("before return");
   return (
     <section className="container-fluid">
       <section className="cntr">

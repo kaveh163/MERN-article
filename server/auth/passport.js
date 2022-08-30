@@ -60,7 +60,6 @@ passport.use(
         user
           .comparePassword(password)
           .then((res) => {
-            console.log('passport-local');
             return done(null, user);
           })
           .catch((err) => {

@@ -11,14 +11,11 @@ module.exports = function (app) {
   app.locals.limit = "";
   app.locals.time = expirationtimeInMs;
   const router = express.Router();
-  // router.get("/", function (req, res) {
-  //   res.send("users routes working");
-  // });
+  
   router.get(
     "/protected",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
-      console.log("Protected route");
       res.json({
         message: "welcome to the protected route!",
       });
@@ -54,7 +51,6 @@ module.exports = function (app) {
         const pattern =
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[a-zA-Z0-9@$!*?&]{8,}$/;
         const match = pattern.test(value);
-        console.log("match", match);
         return match;
       }),
       check("cpass", "confirm password must match password").custom(
@@ -90,7 +86,6 @@ module.exports = function (app) {
       if (!errors.isEmpty()) {
         return res.json({ errors: errors.array() });
       }
-      console.log("body", req.body);
       const { fname, lname, pass, cpass, email } = req.body;
       const createRegister = async () => {
         try {
@@ -126,7 +121,6 @@ module.exports = function (app) {
     }
   );
   router.post("/login", function (req, res, next) {
-    console.log("app.locals.limit", app.locals.limit);
     passport.authenticate(
       "local",
       { session: false },
@@ -137,10 +131,7 @@ module.exports = function (app) {
         }
         app.locals.limit = Date.now() + parseInt(expirationtimeInMs);
         // app.locals.time = parseInt(expirationtimeInMs);
-        console.log("app.locals.limit", app.locals.limit);
-        console.log("user", user);
         const { _id } = user;
-        console.log(_id);
         const payload = {
           sub: _id,
           expiration: app.locals.limit,
@@ -177,35 +168,10 @@ module.exports = function (app) {
         if (!user) {
           return res.send("<h1>UnAuthorized!</h1>");
         }
-
         res.json({ success: true });
       }
     )(req, res, next);
   });
-
-  // router.post(
-  //   "/login",
-  //   passport.authenticate("local", { session: false }),
-  //   (req, res) => {
-  //     if (req.isAuthenticated()) {
-  //       const { _id } = req.user;
-  //       console.log("id", _id);
-  //       const payload = {
-  //         sub: _id,
-  //         expiration: Date.now() + expirationtimeInMs,
-  //       };
-  //       console.log("payload", payload);
-  //       const token = jwt.sign(payload, "jwt_secret_key");
-  //       res.cookie("jwt", token, {
-  //         httpOnly: true,
-  //         secure: false,
-  //       });
-  //       res.status(200).json({ success: true });
-  //     } else {
-  //       res.json({ message: "Invalid Email and/or Password" });
-  //     }
-  //   }
-  // );
 
   return router;
 };
