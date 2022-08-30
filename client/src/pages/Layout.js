@@ -107,7 +107,7 @@ function Layout() {
               id="collapsibleNavbar"
             >
               <ul className="navbar-nav mb-2 mb-lg-0">
-                <li className="nav-item">
+                <li className={`nav-item`}>
                   <Link
                     className="nav-link active"
                     aria-current="page"
@@ -118,14 +118,14 @@ function Layout() {
                 </li>
                 <li className="nav-item">
                   {show && (
-                    <Link className="nav-link" to="/article/?success=true">
+                    <Link className={`nav-link ${styles.menuChild}`} to="/article/?success=true">
                       Add Article
                     </Link>
                   )}
                 </li>
                 <li className="nav-item">
                   {show && (
-                    <Link className="nav-link" to="/articles/?success=true">
+                    <Link className={`nav-link ${styles.menuChild}`} to="/articles/?success=true">
                       Articles
                     </Link>
                   )}
@@ -134,7 +134,7 @@ function Layout() {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   {toggle && (
-                    <Link className="nav-link" to="/login">
+                    <Link className={`nav-link ${styles.menuChild}`} to="/login">
                       Login
                     </Link>
                   )}
