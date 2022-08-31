@@ -7,7 +7,7 @@ In order to validate the fields specified during registering, logging in, creati
 
 Below is a snapshot of the project.
 
-![News Media App](Assets/newsApp.PNG)
+![News Media App](./Assets/newsApp.png)
 
 ## Instructions
 It is presumed that you have already installed Node.js MongoDB and Git in your device.
