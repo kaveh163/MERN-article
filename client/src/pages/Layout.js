@@ -125,7 +125,7 @@ function Layout() {
                       className={`nav-link ${styles.menuChild}`}
                       to="/articles/?success=true"
                     >
-                      Articles
+                      My Articles
                     </Link>
                   )}
                 </li>
