@@ -1,12 +1,15 @@
-
-
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:active,
+.navbar .navbar-nav .nav-link[tabindex]:focus {
+  outline: none;
+  color: green;
+}
 .card-footer {
-    border-top: none;
-    
+  border-top: none;
 }
 .card:hover {
-    border: 1px solid red;
-    color: black;
+  border: 1px solid red;
+  color: black;
 }
 /* .cntr {
     z-index: -100!important

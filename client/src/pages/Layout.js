@@ -105,6 +105,7 @@ function Layout() {
                     className="nav-link active"
                     aria-current="page"
                     to={show ? "/?success=true" : "/"}
+                    tabIndex="1"
                   >
                     Home
                   </Link>
@@ -114,6 +115,7 @@ function Layout() {
                     <Link
                       className={`nav-link ${styles.menuChild}`}
                       to="/article/?success=true"
+                      tabIndex="1"
                     >
                       Add Article
                     </Link>
@@ -124,6 +126,7 @@ function Layout() {
                     <Link
                       className={`nav-link ${styles.menuChild}`}
                       to="/articles/?success=true"
+                      tabIndex="1"
                     >
                       My Articles
                     </Link>
@@ -136,6 +139,7 @@ function Layout() {
                     <Link
                       className={`nav-link ${styles.menuChild}`}
                       to="/login"
+                      tabIndex="1"
                     >
                       Login
                     </Link>
@@ -146,6 +150,7 @@ function Layout() {
                     <a
                       className={`nav-link ${styles.cursor}`}
                       onClick={logoutHandler}
+                      tabIndex="1"
                     >
                       Logout
                     </a>
